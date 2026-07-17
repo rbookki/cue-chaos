@@ -1,26 +1,30 @@
-# CueChaos
+# CueChaos: Plot Saboteur
 
-**Your friends. One impossible scene. A movie that listens—without a runtime AI bill.**
+**Trust the cast. Suspect everyone.**
 
-CueChaos is a bilingual 3–6 player, pass-the-phone improv party game. It casts every player, assigns private objectives, runs a timed three-act comedy, folds the group’s choices back into later scenes, and finishes with a movie recap plus affectionate cast awards.
+CueChaos is a bilingual, pass-the-phone social deduction game for 3–6 friends. One player is secretly the Plot Saboteur. Across three absurd story crises, everyone votes anonymously, debates the result, and finally accuses the person they think has been steering the story toward disaster.
 
 Built with Codex and GPT‑5.6 for OpenAI Build Week 2026. Category: **Apps for Your Life**.
 
-## The zero-API idea
+## The game in one minute
 
-GPT‑5.6 is used directly inside the Codex build workflow as the project’s story room. It creates and refines the world concepts, roles, secret objectives, three-act beats, callbacks, choices, and finale material. Those reviewed story packs are committed with the game in `app/story-pack-director.ts`.
+1. Choose English or Chinese, pick one of four comedy cases, and enter 3–6 unique names.
+2. Pass the phone so each player can privately reveal a cover role. One player also sees **Plot Saboteur** and three target outcomes.
+3. Read a crisis together, then pass the phone for a secret vote. The Saboteur tries to make the marked target win without looking suspicious.
+4. Reveal the anonymous vote split and discuss who pushed the group toward disaster. Repeat for three rounds.
+5. Pass the phone one last time for secret accusations, then reveal the Saboteur and the winner.
 
-The shipped website never calls the OpenAI API. Playing is deterministic, private, and free of model charges:
+The Cast wins only if it uniquely identifies the Saboteur **and** fewer than two sabotage targets succeeded. Otherwise, the Saboteur wins. No acting experience is required; a full case takes about 8–12 minutes.
 
-1. Start in English or switch to Chinese, pick one of four absurd story worlds, and enter 3–6 names.
-2. Pass the phone so every player can privately reveal a role and secret objective.
-3. Use the built-in 60-second timer to perform each scene together.
-4. Choose a move or improvise something worse; the seeded local engine turns it into one of several callbacks and remixes the next choices.
-5. Finish with a three-act movie recap and one personalized award for every player.
+## Zero runtime API spend
 
-The reusable story-room brief is documented in `submission/STORY_ROOM_PROMPT.md`. The primary Codex task and commit history provide evidence of the direct GPT‑5.6/Codex workflow.
+GPT‑5.6 is used directly inside the Codex build workflow as the project’s writers’ room. It creates and refines the bilingual roles, crises, decisions, consequences, chaos values, and sabotage targets. The reviewed packs are committed in `app/sabotage-director.ts`.
 
-## Run the judge demo
+The shipped website never calls the OpenAI API. Every visitor gets the complete game without an API key, model latency, or a way to consume the creator’s model budget. The same player list, case, and seed always produces the same private deal and option order.
+
+The reproducible content brief lives in `submission/STORY_ROOM_PROMPT.md`. The primary Codex task and commit history document the implementation workflow.
+
+## Run locally
 
 Requirements: Node.js 22.13 or newer.
 
@@ -29,61 +33,50 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`. No account, environment variables, or API key are required. Judges can complete the full game offline after the application has been installed.
+Open `http://localhost:3000`. No account, environment variable, or API key is required.
 
 ## Architecture
 
 ```text
-GPT‑5.6 in Codex (build-time story room)
-              │
-              ▼
-committed, reviewed story packs
-              │
-              ▼
-lobby → private role reveal → three acts → finale
-              │
-              └── local request validation and callback remixing
+GPT‑5.6 in Codex (controlled build-time writers’ room)
+                         │
+                         ▼
+            committed bilingual chaos packs
+                         │
+                         ▼
+secret role deal → 3 anonymous ballots → final accusation
+                         │
+                         └── deterministic local game engine
 ```
 
-- `app/CueChaosGame.tsx` — pass-the-phone game state and interaction.
-- `app/api/director/route.ts` — local validation; contains no external model call.
-- `app/story-pack-director.ts` — committed story worlds and deterministic callback engine.
-- `app/game-types.ts` — shared game contract.
+- `app/CueChaosGame.tsx` — lobby, pass-the-phone privacy screens, ballots, discussion, and verdict.
+- `app/api/director/route.ts` — input validation and local pack delivery; no external model call.
+- `app/sabotage-director.ts` — four committed cases and deterministic secret-role setup.
+- `app/game-types.ts` — the shared game contract.
 - `submission/STORY_ROOM_PROMPT.md` — reproducible GPT‑5.6-in-Codex content workflow.
-- `tests/rendered-html.test.mjs` — server render, playable pack, safety, and validation tests.
+- `tests/rendered-html.test.mjs` — rendering, pack integrity, determinism, validation, and zero-API tests.
 
 ## Delivery-ready features
 
-- Complete Simplified Chinese and English product copy plus bilingual story content.
-- Four worlds: pastry heist, corporate disaster, wedding mystery, and lunar motel comedy.
-- A first-run rules dialog that explains the physical pass-the-phone format.
-- A resettable 60-second performance timer for each act.
-- Seeded role rotation, choice ordering, and four callback variants per decision.
-- A finale timeline that records who chose what before presenting cast awards.
-- Responsive touch targets, keyboard focus states, and reduced-motion support.
+- English by default with a one-tap Simplified Chinese switch.
+- Four complete worlds: pastry heist, corporate disaster, wedding mystery, and lunar motel.
+- Exactly one hidden Saboteur, three private targets, anonymous ballots, 30-second discussions, and final accusations.
+- A clear, two-condition win rule and a verdict ledger showing votes, damage, and target successes.
+- Duplicate-name protection, 3–6 player validation, private pass screens, keyboard focus states, large touch targets, and reduced-motion support.
+- Fully deterministic, credential-free gameplay with no persisted player data.
 
 ## How Codex and GPT‑5.6 contributed
 
-Codex was the primary development environment for product framing, interaction design, implementation, responsive styling, testing, and submission preparation. GPT‑5.6’s meaningful product role is the story-room pass: it generates the actual playable roles, objectives, scenes, and comic escalation committed in the repository rather than being a decorative chatbot.
+Codex was the primary environment for product framing, interaction design, implementation, responsive styling, testing, security decisions, and submission preparation. GPT‑5.6’s meaningful product role is the controlled writers’ room: it produced the actual bilingual decisions and consequences players encounter, not a decorative chatbot.
 
-Key decisions made with Codex:
-
-- Narrowed the experience from a generic story generator to a social, pass-the-phone game loop.
-- Replaced a publicly callable runtime model endpoint with committed story packs, eliminating visitor-driven API spend.
-- Preserved reactive fun locally by echoing player moves into later scenes and awards.
-- Expanded replayability with deterministic session seeds, rotating roles, reordered choices, and localized callback variants.
-- Made the entire judge path credential-free and visibly labeled **Offline Story Pack**.
-- Kept the content workflow reproducible with a checked-in story-room brief.
-
-The required `/feedback` Session ID from the primary build task should be included in the Devpost submission.
+The most important design decision was moving model use to creation time. Visitors still receive authored variety and replayable comedy, but the public runtime has no billable inference endpoint. The required `/feedback` Session ID from the primary build task should be included in the Devpost submission.
 
 ## Safety and privacy
 
-- There is no API key, hosted model credential, or externally billable inference path.
-- Player names and moves are validated and length-limited.
-- No player data is persisted or transmitted outside the application.
-- Story material is reviewed, playful, and PG‑13.
-- The final choice is always made by the players; CueChaos generates fiction, not real-world instructions.
+- No API key, hosted model credential, or externally billable inference path.
+- Names are validated, trimmed, length-limited, and kept in memory only.
+- No accounts, analytics, database, or player-data persistence.
+- Fictional, playful, PG‑13 story material with no harmful real-world instructions.
 
 ## Verification
 
@@ -94,7 +87,7 @@ npm run lint
 
 ## Open-source resources
 
-The interface uses the open-source Geist and Geist Mono typefaces through `next/font`. The visual system otherwise uses original CSS typography, gradients, and geometric stage effects; no unlicensed stock imagery is bundled.
+The interface uses the open-source Geist and Geist Mono typefaces through `next/font`. The remaining visual system uses original CSS typography, gradients, and geometric effects; no unlicensed stock imagery is bundled.
 
 ## License
 

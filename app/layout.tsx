@@ -15,18 +15,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: baseUrl,
-    title: "CueChaos — The movie is listening",
-    description: "A bilingual, zero-API improv party game with secret roles, timed scenes, and Codex-crafted story packs.",
+    title: "CueChaos — Plot Saboteur",
+    description: "A bilingual, zero-API social deduction game with secret roles, anonymous votes, and Codex-crafted chaos packs.",
     openGraph: {
-      title: "CueChaos — The movie is listening",
-      description: "Four bilingual story worlds. One impossible scene. A zero-API party game built with Codex.",
+      title: "CueChaos — Plot Saboteur",
+      description: "Three impossible crises. One hidden saboteur. A zero-API party game built with Codex.",
       type: "website",
       images: [{ url: socialImage, width: 1734, height: 907, alt: "CueChaos — The movie is listening" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "CueChaos — The movie is listening",
-      description: "Four bilingual story worlds. One impossible scene. A zero-API party game built with Codex.",
+      title: "CueChaos — Plot Saboteur",
+      description: "Three impossible crises. One hidden saboteur. A zero-API party game built with Codex.",
       images: [socialImage],
     },
   };

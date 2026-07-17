@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { CueChaosGame } from "./CueChaosGame";
 
 export const metadata: Metadata = {
-  title: "CueChaos — The movie is listening",
-  description: "A bilingual, zero-API improv party game with secret roles, timed scenes, and Codex-crafted story packs.",
+  title: "CueChaos — Plot Saboteur",
+  description: "A bilingual, zero-API social deduction game with secret roles, anonymous votes, and Codex-crafted chaos packs.",
 };
 
 export default function Home() {

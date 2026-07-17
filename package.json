@@ -1,8 +1,8 @@
 {
   "name": "cue-chaos",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "A bilingual zero-API improv party game with timed scenes and Codex-crafted story packs.",
+  "description": "A bilingual zero-API social deduction game with anonymous voting and Codex-crafted chaos packs.",
   "license": "MIT",
   "engines": {
     "node": ">=22.13.0"

@@ -2,40 +2,44 @@
 
 ## 0:00–0:20 — Hook
 
-Show the English lobby, switch briefly to Chinese, then return to English and reveal all four story worlds.
+Show the English lobby, briefly switch to Chinese, then return to English and reveal the four cases.
 
-“Most AI storytelling keeps one person at a prompt box. CueChaos does the opposite: one phone turns a room of friends into a comedy cast—and nobody can burn through our API budget because the game makes zero runtime model calls.”
+“One of us is secretly trying to wreck the story. CueChaos turns one phone into a fast social deduction game—and nobody can burn our API budget because the public game makes zero model calls.”
 
-## 0:20–0:50 — Private casting
+## 0:20–0:50 — Secret deal
 
-Open the 60-second rules panel, enter three names, start a game, and pass through two role reveals.
+Open **How to Play**, enter three names, deal roles, and show one Cast card followed by the Saboteur card and its three targets.
 
-“GPT‑5.6 worked directly with us inside Codex as the story room. It created the playable roles, secret objectives, three-act escalation, choices, and endings that we reviewed and committed as typed story packs.”
+“Pass the phone. Everyone gets a cover role, but one player also becomes the Plot Saboteur. Only they know the worst outcome in each of three crises.”
 
-## 0:50–1:35 — The game loop
+## 0:50–1:35 — Anonymous round
 
-Start the built-in performance timer in Act I, make a suggested choice, then use a custom move in Act II.
+Show a crisis and its three public choices. Start the secret ballot, pass through all three private votes, then reveal the majority, anonymous vote split, and target status.
 
-“At runtime, a small local engine validates the cast, loads the selected story pack, and turns our latest move into a callback. The **Offline Story Pack** badge is literal: no API key, no external inference request, and no visitor-driven cost.”
+“The Saboteur must push the marked option without being obvious. After the result, the game reveals the evidence—not who cast each vote—and gives the table 30 seconds to argue.”
 
-Show the move reappearing in the next director line.
+Show a second crisis briefly.
 
-“Players still get a reactive social game, but the expensive and abusable part has moved into a controlled creation workflow.”
+“The comedy is authored, but the suspicion comes from the people in the room.”
 
-## 1:35–2:05 — Finale
+## 1:35–2:05 — Final accusation
 
-Complete Act III and scroll through the three-act recap and awards.
+Complete the final private accusations and reveal the verdict, target count, chaos score, accusation results, and damage ledger.
 
-“The finale preserves who made each decision, pays off the recurring joke, and gives every player an affectionate award, so the session feels like a tiny movie made for this room.”
+“The Cast needs both conditions: uniquely identify the Saboteur and stop at least two of their three targets. Otherwise, the Saboteur steals the final cut.”
 
 ## 2:05–2:40 — Codex + GPT‑5.6 evidence
 
-Show `submission/STORY_ROOM_PROMPT.md`, `app/story-pack-director.ts`, tests, and the main Codex task.
+Show `submission/STORY_ROOM_PROMPT.md`, `app/sabotage-director.ts`, the tests, and the main Codex task.
 
-“Codex was our primary build environment—from turning the idea into a pass-the-phone format, to UI engineering, tests, and the security pivot. GPT‑5.6’s role was meaningful and visible: it produced the actual playable content through this reproducible story-room brief, not a decorative chatbot bolted onto the page.”
+“GPT‑5.6 worked directly with us inside Codex as a controlled writers’ room. It produced the bilingual roles, crises, choices, and consequences that players actually use. Codex handled the product pivot, UI engineering, testing, and a security decision that moved generation out of the public runtime.”
+
+Show the zero-API test.
+
+“No key, no external inference endpoint, no visitor-driven cost.”
 
 ## 2:40–2:55 — Close
 
-Return to the lobby.
+Return to the verdict or lobby.
 
-“CueChaos: your friends, one impossible scene, and zero runtime AI bill.”
+“CueChaos: trust the cast, suspect everyone.”

@@ -2,43 +2,49 @@ export type ThemeId = "heist" | "office" | "wedding" | "space";
 
 export type Locale = "zh" | "en";
 
-export type DirectorAction = "start" | "twist" | "finale";
+export type Team = "cast" | "saboteur";
 
-export interface RoleCard {
-  player: string;
-  publicRole: string;
-  secretObjective: string;
-}
+export type ChoiceId = "A" | "B" | "C";
 
-export interface AwardCard {
-  player: string;
-  title: string;
-  reason: string;
-}
-
-export interface DirectorBeat {
-  headline: string;
-  directorLine: string;
-  twist: string;
-  mission: string;
-  choices: [string, string, string];
-  heat: number;
-  roles: RoleCard[];
-  finale: string;
-  awards: AwardCard[];
-  source?: "story-pack";
-  variant?: number;
-}
-
-export interface DirectorRequest {
-  action: DirectorAction;
+export interface SabotageGameRequest {
   theme: ThemeId;
   players: string[];
-  act: number;
-  playerMove?: string;
-  history: string[];
   locale: Locale;
   sessionSeed: string;
+}
+
+export interface SabotageTarget {
+  round: number;
+  choiceId: ChoiceId;
+  label: string;
+}
+
+export interface SecretCard {
+  player: string;
+  team: Team;
+  coverRole: string;
+  briefing: string;
+  targets: SabotageTarget[];
+}
+
+export interface ChaosChoice {
+  id: ChoiceId;
+  label: string;
+  consequence: string;
+  chaos: number;
+}
+
+export interface ChaosRound {
+  headline: string;
+  situation: string;
+  question: string;
+  choices: [ChaosChoice, ChaosChoice, ChaosChoice];
+}
+
+export interface SabotageGame {
+  cards: SecretCard[];
+  rounds: [ChaosRound, ChaosRound, ChaosRound];
+  source: "story-pack";
 }
 
 type LocalizedText = Record<Locale, string>;
@@ -54,8 +60,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "MIDNIGHT CAPER", zh: "午夜大劫案" },
     title: { en: "The Last Croissant", zh: "最后一个牛角包" },
     logline: {
-      en: "Steal a priceless pastry before sunrise. Nobody has the full plan.",
-      zh: "天亮前偷走无价牛角包——可惜没有人知道完整计划。",
+      en: "Save the heist while one crew member secretly wrecks the plan.",
+      zh: "拯救这场劫案——但团队里有人正秘密毁掉计划。",
     },
     accent: "#ffd84d",
     symbol: "◇",
@@ -64,8 +70,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "CORPORATE DISASTER", zh: "职场灾难片" },
     title: { en: "Reply All", zh: "回复所有人" },
     logline: {
-      en: "Survive an all-hands meeting after the company mascot becomes CEO.",
-      zh: "公司吉祥物突然成为 CEO，你们必须活着开完全员大会。",
+      en: "Three company crises. One coworker wants every meeting to fail.",
+      zh: "三场公司危机，一个同事希望每次会议都彻底失败。",
     },
     accent: "#63f3c3",
     symbol: "↗",
@@ -74,8 +80,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "ROMANTIC MYSTERY", zh: "浪漫悬疑片" },
     title: { en: "Object Forever", zh: "永远反对" },
     logline: {
-      en: "The rings are missing, the ex is early, and the cake knows too much.",
-      zh: "戒指失踪、前任早到，而婚礼蛋糕知道得太多。",
+      en: "Keep the wedding alive while a hidden guest engineers disaster.",
+      zh: "让婚礼继续，同时找出正在制造灾难的神秘宾客。",
     },
     accent: "#ff76b8",
     symbol: "♡",
@@ -84,8 +90,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "COSMIC CHECK-IN", zh: "宇宙入住指南" },
     title: { en: "Moon Motel", zh: "月球汽车旅馆" },
     logline: {
-      en: "Run a one-star lunar motel while the universe checks out early.",
-      zh: "经营一家一星月球旅馆，而整个宇宙都想提前退房。",
+      en: "Protect a lunar motel from the one guest trying to crash the moon.",
+      zh: "保护月球旅馆，找出那个想让整个月球坠毁的客人。",
     },
     accent: "#9fa8ff",
     symbol: "✦",
