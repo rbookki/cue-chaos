@@ -31,7 +31,7 @@ test("server-renders the CueChaos product experience", async () => {
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 
-test("demo director returns a complete, playable opening beat", async () => {
+test("offline story pack returns a complete, playable opening beat", async () => {
   const worker = await loadWorker();
   const response = await worker.fetch(new Request("http://localhost/api/director", {
     method: "POST",
@@ -46,10 +46,16 @@ test("demo director returns a complete, playable opening beat", async () => {
   }), env, ctx);
   assert.equal(response.status, 200);
   const beat = await response.json();
-  assert.equal(beat.source, "demo");
+  assert.equal(beat.source, "story-pack");
   assert.equal(beat.roles.length, 3);
   assert.equal(beat.choices.length, 3);
   assert.ok(beat.roles.every((role) => role.secretObjective));
+});
+
+test("runtime bundle contains no external OpenAI inference endpoint", async () => {
+  const builtWorkerUrl = new URL("../dist/server/index.js", import.meta.url);
+  const workerSource = await import("node:fs/promises").then(({ readFile }) => readFile(builtWorkerUrl, "utf8"));
+  assert.doesNotMatch(workerSource, /api\.openai\.com|OPENAI_API_KEY/);
 });
 
 test("director rejects undersized casts", async () => {

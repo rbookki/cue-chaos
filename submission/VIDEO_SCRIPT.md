@@ -1,49 +1,41 @@
-# CueChaos — three-minute demo script
+# CueChaos — Demo Video Script (≤ 3 minutes)
 
 ## 0:00–0:20 — Hook
 
-“Most AI storytelling keeps one person at a prompt box. CueChaos does the opposite. It turns one phone and a group of friends into a live comedy directed by GPT‑5.6.”
+Show the lobby and three story worlds.
 
-Show the landing page, the three story worlds, and the 3–6 player cast.
+“Most AI storytelling keeps one person at a prompt box. CueChaos does the opposite: one phone turns a room of friends into a comedy cast—and nobody can burn through our API budget because the game makes zero runtime model calls.”
 
-## 0:20–0:50 — Start a game
+## 0:20–0:50 — Private casting
 
-Choose **Reply All**, keep Maya, Leo, and Sam, then start the show.
+Enter three names, start a game, and pass through two role reveals.
 
-“GPT‑5.6 creates a private role and secret objective for every player. We pass the phone, reveal one role at a time, then hide it before the next player looks.”
+“GPT‑5.6 worked directly with us inside Codex as the story room. It created the playable roles, secret objectives, three-act escalation, choices, and endings that we reviewed and committed as typed story packs.”
 
-Reveal Maya’s role and objective, then move quickly through the remaining cards.
+## 0:50–1:35 — The game loop
 
-## 0:50–1:35 — The live loop
+Show Act I, make a suggested choice, then use a custom move in Act II.
 
-“Each act is short enough to perform in the room. The active player can pick one of three moves or improvise a new one.”
+“At runtime, a small local engine validates the cast, loads the selected story pack, and turns our latest move into a callback. The **Offline Story Pack** badge is literal: no API key, no external inference request, and no visitor-driven cost.”
 
-Show Act I, pick **Promote the coffee machine**.
+Show the move reappearing in the next director line.
 
-“The full game state and our choice go to the OpenAI Responses API. GPT‑5.6 returns a strict, validated scene contract: narration, plot twist, mission, choices, and chaos level. The next act specifically turns our decision against us.”
+“Players still get a reactive social game, but the expensive and abusable part has moved into a controlled creation workflow.”
 
-Show the **GPT‑5.6 LIVE** badge and the resulting Act II.
+## 1:35–2:05 — Finale
 
-## 1:35–2:05 — Custom improvisation
+Complete Act III and scroll through the awards.
 
-Type: “The coffee machine demands stock options.”
+“The finale pays off the recurring joke and gives every player an affectionate award, so the session feels like a tiny movie made for this room.”
 
-“Players are not trapped in generated options. A custom move becomes part of the shared history, so the director can preserve continuity and escalate the joke.”
+## 2:05–2:40 — Codex + GPT‑5.6 evidence
 
-Advance to Act III.
+Show `submission/STORY_ROOM_PROMPT.md`, `app/story-pack-director.ts`, tests, and the main Codex task.
 
-## 2:05–2:30 — Finale
+“Codex was our primary build environment—from turning the idea into a pass-the-phone format, to UI engineering, tests, and the security pivot. GPT‑5.6’s role was meaningful and visible: it produced the actual playable content through this reproducible story-room brief, not a decorative chatbot bolted onto the page.”
 
-Choose the final move and show the ending and player awards.
+## 2:40–2:55 — Close
 
-“The last choice produces a compact movie ending and one affectionate award for every player. Nothing is saved; the fun belongs to the room.”
+Return to the lobby.
 
-## 2:30–2:53 — Codex and architecture
-
-Show a quick split view of the repository and application.
-
-“Codex was our primary build environment—from narrowing the product into a pass-the-phone game, to implementing the responsive interface, the GPT‑5.6 structured-output route, the deterministic judge mode, tests, and this demo.”
-
-## 2:53–3:00 — Close
-
-“CueChaos: your friends, one impossible scene, and a movie that listens.”
+“CueChaos: your friends, one impossible scene, and zero runtime AI bill.”

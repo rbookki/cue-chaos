@@ -1,38 +1,40 @@
-# CueChaos — Devpost submission draft
+# CueChaos — Devpost Submission Draft
 
 ## Inspiration
 
-AI entertainment often becomes a solitary prompt box. We wanted to build something that makes people look at each other instead of the screen. CueChaos turns one phone into a live director for a ten-minute comedy that only this group of friends could create.
+AI entertainment often becomes a solitary prompt box. We wanted something that makes people look at each other instead of the screen—and that cannot be abused to run up the creator’s API bill. CueChaos turns one phone and a set of committed story packs into a ten-minute comedy for a room of friends.
 
 ## What it does
 
-CueChaos casts 3–6 players into an absurd three-act story. Every player privately receives a character and secret objective. The group performs the scene, picks a suggested move or improvises their own, and GPT‑5.6 rewrites the next act around that decision. The finale turns the whole run into a movie ending and gives every player a personalized award.
+CueChaos casts 3–6 players into an absurd three-act story. Every player privately receives a character and secret objective. The group performs the scene, picks a suggested move or improvises its own, and the local story engine folds that decision into the next scene. The finale turns the run into a movie ending and gives every player an award.
 
-## How we built it
+## How we used GPT‑5.6 and Codex
 
-The application is built with Next.js/React and runs on a Cloudflare-compatible worker. A server route validates the game state and calls the OpenAI Responses API using the `gpt-5.6` model alias and strict structured outputs. The same typed contract is implemented by a deterministic demo director, so judges can play without credentials and can always see whether a beat is live or simulated.
+GPT‑5.6 is used directly inside Codex as CueChaos’s build-time story room. It creates and refines the playable worlds, roles, secret objectives, three-act escalation, choices, callbacks, endings, and awards. The reviewed output is committed as typed story packs. The reusable brief is included in `submission/STORY_ROOM_PROMPT.md`, and the primary Codex task plus commit history documents the workflow.
 
-Codex was the primary development environment for ideation, interaction design, implementation, API integration, testing, and this submission. We will include the `/feedback` Session ID from the main build thread in the final form.
+Codex was also the primary environment for product ideation, interaction design, implementation, responsive styling, test design, security decisions, and submission preparation. One key Codex decision was replacing an anonymous runtime model endpoint with committed packs: judges get a complete experience, while visitors get no path to consume our API budget.
 
-## Challenges
+## How it works
 
-The hard part was not generating a story. It was keeping a shared story playable, private when it needed to be, continuous across three acts, and short enough that a room of people would not lose energy. We solved this with a compact story-state contract, hard response limits, three distinct action choices per beat, and a pass-the-phone role reveal.
+The application is built with Next.js/React and runs on a Cloudflare-compatible worker. A local route validates player input and remixes the committed story pack with the group’s latest move. There are no OpenAI credentials, external inference calls, accounts, or usage charges in the deployed game.
 
-## Accomplishments
+## Built with
 
-- A complete 3–6 player game from casting through finale.
-- GPT‑5.6 plot twists grounded in the group’s actual choices.
-- Private objectives without accounts or persisted player data.
-- A credential-free judge experience with transparent provider labeling.
-- Responsive visual design that works on a shared phone or laptop.
+- Codex
+- GPT‑5.6 used directly in the Codex story-room workflow
+- TypeScript
+- React / Next.js
+- Vinext / Vite
+- Cloudflare-compatible Workers runtime
+- Node test runner and ESLint
 
-## What we learned
+## Highlights
 
-For social AI experiences, latency and continuity matter as much as raw creativity. The model needs a strong format, a clear dramatic job, and enough constraints to keep people playing rather than reading.
-
-## What’s next
-
-We would add QR-based multi-phone role reveals, community-authored story packs, optional voice narration, and a shareable end-credits poster generated from each game.
+- Pass-the-phone secret role reveals for 3–6 players.
+- Three complete comedy worlds with escalating story beats.
+- Free-form moves become local callbacks in later scenes.
+- A complete credential-free judge path.
+- Zero runtime AI calls and zero visitor-driven API spend.
 
 ## Category
 
@@ -40,10 +42,9 @@ Apps for Your Life
 
 ## Submission checklist
 
-- [ ] Public deployment URL
-- [ ] Public repository with MIT license
-- [ ] README with setup and testing instructions
-- [ ] Under-three-minute public YouTube demo with English voiceover
-- [ ] Show GPT‑5.6 Live badge and explain the deterministic judge fallback
-- [ ] Explain how Codex was used
-- [ ] Add `/feedback` Session ID from the primary build thread
+- [ ] Public YouTube demo, 3 minutes or shorter, with voiceover
+- [ ] Explain the direct GPT‑5.6-in-Codex story-room workflow
+- [ ] Show `STORY_ROOM_PROMPT.md` and a committed story pack
+- [ ] Show the **Offline Story Pack** badge during gameplay
+- [ ] Include the primary `/feedback` Codex Session ID
+- [ ] Share the repository with the required judging accounts if private

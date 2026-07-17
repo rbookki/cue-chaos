@@ -24,7 +24,7 @@ export interface DirectorBeat {
   roles: RoleCard[];
   finale: string;
   awards: AwardCard[];
-  source?: "gpt-5.6" | "demo";
+  source?: "story-pack";
 }
 
 export interface DirectorRequest {

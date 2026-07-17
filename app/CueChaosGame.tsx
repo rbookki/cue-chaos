@@ -56,7 +56,7 @@ function Lobby({
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero__signal"><span /> THE MOVIE IS LISTENING <span /></div>
         <h1 id="hero-title">Your friends.<br /><em>One impossible scene.</em></h1>
-        <p>CueChaos turns any room into a live, AI-directed comedy. Secret roles. Bad decisions. A story that rewrites itself around you.</p>
+        <p>CueChaos turns any room into a Codex-crafted comedy. Secret roles. Bad decisions. A story pack that folds your choices back into the scene.</p>
         <div className="hero__proof">
           <span><b>3–6</b> players</span>
           <span><b>10</b> minutes</span>
@@ -118,10 +118,10 @@ function Lobby({
 
         {error && <p className="error-banner" role="alert">{error}</p>}
         <button className="start-button" onClick={onStart} disabled={!canStart || loading}>
-          <span>{loading ? "WRITING YOUR OPENING SCENE…" : "START THE SHOW"}</span>
+          <span>{loading ? "LOADING TONIGHT’S STORY PACK…" : "START THE SHOW"}</span>
           <i>{loading ? "···" : "→"}</i>
         </button>
-        <p className="setup-note"><span>✦</span> Directed live by GPT‑5.6 · No acting experience required</p>
+        <p className="setup-note"><span>✦</span> Story packs created with GPT‑5.6 in Codex · Zero API calls while playing</p>
       </section>
 
       <section className="how-it-works" aria-label="How CueChaos works">
@@ -129,7 +129,7 @@ function Lobby({
         <div className="steps">
           <article><b>01</b><h3>Reveal</h3><p>Pass the phone. Every player gets a role and a secret objective.</p></article>
           <article><b>02</b><h3>Perform</h3><p>Pick a move or improvise your own. Commit to the bit.</p></article>
-          <article><b>03</b><h3>React</h3><p>The AI director remembers everything and weaponizes it as the next twist.</p></article>
+          <article><b>03</b><h3>React</h3><p>Your choice becomes the next scene’s running joke—without calling an API.</p></article>
         </div>
       </section>
     </main>
@@ -207,7 +207,7 @@ function Stage({
       <header className="stage-header">
         <div><span className="live-dot" /> LIVE STORY</div>
         <div className="act-track" aria-label={`Act ${act + 1} of 3`}>{[0, 1, 2].map((step) => <span key={step} className={step <= act ? "is-active" : ""}><i /> ACT {step + 1}</span>)}</div>
-        <span className={`model-pill ${beat.source === "gpt-5.6" ? "is-live" : ""}`}>{beat.source === "gpt-5.6" ? "GPT‑5.6 LIVE" : "DEMO DIRECTOR"}</span>
+        <span className="model-pill">OFFLINE STORY PACK</span>
       </header>
 
       <section className="scene-layout">
@@ -232,7 +232,7 @@ function Stage({
             <label htmlFor="custom-move">OR IMPROVISE</label>
             <div><input id="custom-move" value={customMove} onChange={(event) => setCustomMove(event.target.value.slice(0, 120))} placeholder="Say what your character does…" disabled={loading} /><button disabled={!customMove.trim() || loading}>GO</button></div>
           </form>
-          {loading && <div className="director-thinking"><span /><p><b>DIRECTOR IS REWRITING</b>Using your choice against you…</p></div>}
+          {loading && <div className="director-thinking"><span /><p><b>CUTTING TO THE NEXT SCENE</b>Turning your choice into a callback…</p></div>}
           {error && <p className="error-banner" role="alert">{error}</p>}
         </aside>
       </section>
@@ -262,7 +262,7 @@ function Finale({ beat, theme, onReplay }: { beat: DirectorBeat; theme: ThemeId;
         <p className="finale-label">A CUECHAOS ORIGINAL</p>
         <h1>{THEMES[theme].title}</h1>
         <p className="finale-copy">{beat.finale}</p>
-        <div className="credits-line"><span>DIRECTED BY GPT‑5.6</span><i>◆</i><span>WRITTEN BY BAD DECISIONS</span></div>
+        <div className="credits-line"><span>STORY PACK BY GPT‑5.6 IN CODEX</span><i>◆</i><span>WRITTEN BY BAD DECISIONS</span></div>
       </section>
 
       <section className="awards-section">

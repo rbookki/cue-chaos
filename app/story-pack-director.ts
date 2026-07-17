@@ -1,5 +1,10 @@
 import type { AwardCard, DirectorBeat, DirectorRequest, RoleCard, ThemeId } from "./game-types";
 
+/**
+ * Pre-generated story-room material authored directly with Codex for Build Week.
+ * Runtime gameplay only remixes these committed packs; it never calls a model API.
+ */
+
 const ROLE_SETS: Record<ThemeId, Array<[string, string]>> = {
   heist: [
     ["The Mastermind", "Get someone else to say the word “butter” before the vault opens."],
@@ -134,7 +139,7 @@ function awardsFor(players: string[], history: string[]): AwardCard[] {
   }));
 }
 
-export function demoDirector(request: DirectorRequest): DirectorBeat {
+export function storyPackDirector(request: DirectorRequest): DirectorBeat {
   if (request.action === "finale") {
     return {
       ...BEATS[request.theme][2],
@@ -147,7 +152,7 @@ export function demoDirector(request: DirectorRequest): DirectorBeat {
       roles: [],
       finale: `The cast chose ${request.history.at(-1) ?? "pure chaos"}, saved absolutely no one, and somehow delivered the year’s most watchable ending.`,
       awards: awardsFor(request.players, request.history),
-      source: "demo",
+      source: "story-pack",
     };
   }
 
@@ -161,6 +166,6 @@ export function demoDirector(request: DirectorRequest): DirectorBeat {
     directorLine: `${beat.directorLine}${moveEcho}`,
     roles: request.action === "start" ? rolesFor(request.players, request.theme) : [],
     awards: [],
-    source: "demo",
+    source: "story-pack",
   };
 }
