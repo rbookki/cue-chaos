@@ -25,9 +25,9 @@ test("server-renders the CueChaos product experience", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>CueChaos — The movie is listening<\/title>/i);
-  assert.match(html, /你的朋友/);
-  assert.match(html, /开始演出/);
-  assert.match(html, /怎么玩/);
+  assert.match(html, /Your friends/);
+  assert.match(html, /START THE SHOW/);
+  assert.match(html, /HOW TO PLAY/);
   assert.match(html, /GPT‑5\.6/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });

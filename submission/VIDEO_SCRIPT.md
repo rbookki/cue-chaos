@@ -2,7 +2,7 @@
 
 ## 0:00–0:20 — Hook
 
-Show the Chinese lobby, switch briefly to English, and reveal all four story worlds.
+Show the English lobby, switch briefly to Chinese, then return to English and reveal all four story worlds.
 
 “Most AI storytelling keeps one person at a prompt box. CueChaos does the opposite: one phone turns a room of friends into a comedy cast—and nobody can burn through our API budget because the game makes zero runtime model calls.”
 

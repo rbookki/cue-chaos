@@ -543,7 +543,7 @@ function Finale({
 
 export function CueChaosGame() {
   const [screen, setScreen] = useState<Screen>("lobby");
-  const [locale, setLocale] = useState<Locale>("zh");
+  const [locale, setLocale] = useState<Locale>("en");
   const [rulesOpen, setRulesOpen] = useState(false);
   const [theme, setTheme] = useState<ThemeId>("office");
   const [players, setPlayers] = useState(INITIAL_PLAYERS);

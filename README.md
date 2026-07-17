@@ -12,7 +12,7 @@ GPT‑5.6 is used directly inside the Codex build workflow as the project’s st
 
 The shipped website never calls the OpenAI API. Playing is deterministic, private, and free of model charges:
 
-1. Choose Chinese or English, pick one of four absurd story worlds, and enter 3–6 names.
+1. Start in English or switch to Chinese, pick one of four absurd story worlds, and enter 3–6 names.
 2. Pass the phone so every player can privately reveal a role and secret objective.
 3. Use the built-in 60-second timer to perform each scene together.
 4. Choose a move or improvise something worse; the seeded local engine turns it into one of several callbacks and remixes the next choices.
