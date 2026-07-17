@@ -115,13 +115,36 @@ input:focus-visible {
   letter-spacing: 0.18em;
 }
 
-.site-header > a:last-child {
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+}
+
+.site-header__actions button {
+  min-height: 36px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-geist-mono), monospace;
+}
+
+.locale-switch {
+  min-width: 42px;
+  padding: 0 10px;
+  border: 1px solid #45423d !important;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.header-action {
   justify-self: end;
   color: #d3d0c8;
   font-size: 10px;
   font-weight: 760;
   letter-spacing: 0.15em;
-  text-decoration: none;
 }
 
 .kicker,
@@ -270,7 +293,7 @@ input:focus-visible {
 
 .theme-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-top: 34px;
 }
@@ -332,6 +355,10 @@ input:focus-visible {
 
 .theme-card--wedding .theme-card__art {
   background: #a73e70;
+}
+
+.theme-card--space .theme-card__art {
+  background: #5058a8;
 }
 
 .theme-card__art::before,
@@ -1309,6 +1336,230 @@ input:focus-visible {
   font-size: 16px;
 }
 
+/* Delivery-ready interaction layers */
+.rules-backdrop {
+  position: fixed;
+  z-index: 100;
+  display: grid;
+  inset: 0;
+  padding: 24px;
+  overflow-y: auto;
+  place-items: center;
+  background: rgba(3, 3, 3, 0.86);
+  backdrop-filter: blur(14px);
+}
+
+.rules-modal {
+  position: relative;
+  width: min(760px, 100%);
+  padding: clamp(30px, 6vw, 64px);
+  border: 1px solid #c8c2b6;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 16px 16px 0 var(--accent);
+}
+
+.rules-modal__x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #b8b1a5;
+  background: transparent;
+  color: #171613;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.rules-modal h2 {
+  max-width: 600px;
+  margin: 12px 0 14px;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.rules-modal__intro {
+  max-width: 600px;
+  margin: 0;
+  color: #686259;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.rules-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin-top: 32px;
+  background: #c8c2b6;
+}
+
+.rules-list article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 15px;
+  min-height: 150px;
+  padding: 22px;
+  background: #faf8f2;
+}
+
+.rules-list article > span {
+  color: #918b81;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 9px;
+}
+
+.rules-list h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.rules-list p {
+  margin: 0;
+  color: #716b61;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.rules-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 58px;
+  margin-top: 24px;
+  padding: 0 20px;
+  border: 1px solid #11100e;
+  background: #11100e;
+  color: #fff;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.rules-modal__close:hover {
+  background: var(--accent);
+  color: #11100e;
+}
+
+.scene-timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 14px 15px;
+  border: 1px solid #34332f;
+  background: #171715;
+}
+
+.scene-timer > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.scene-timer span {
+  color: #77746e;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.scene-timer strong {
+  margin-top: 3px;
+  color: var(--accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 25px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+.scene-timer > div:last-child {
+  display: flex;
+  gap: 6px;
+}
+
+.scene-timer button {
+  min-height: 34px;
+  padding: 0 9px;
+  border: 1px solid #45423d;
+  background: transparent;
+  color: #aaa69d;
+  cursor: pointer;
+  font-size: 8px;
+}
+
+.scene-timer.is-finished {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, #171715);
+}
+
+.perform-cue {
+  margin: -6px 0 20px;
+  color: #88847c;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.scene-timer.is-finished + .perform-cue {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.recap-section {
+  margin-top: 92px;
+  text-align: left;
+}
+
+.recap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+}
+
+.recap-grid article {
+  min-height: 150px;
+  padding: 24px;
+  background: #0d0d0c;
+}
+
+.recap-grid span {
+  color: var(--accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.recap-grid strong {
+  display: block;
+  margin-top: 24px;
+  color: #f2efe7;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.recap-grid p {
+  margin: 8px 0 0;
+  color: #858179;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1150px) and (min-width: 901px) {
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @keyframes pulse {
   50% { opacity: 0.4; }
 }
@@ -1341,6 +1592,7 @@ input:focus-visible {
 
   .theme-grid,
   .player-list,
+  .recap-grid,
   .awards-grid {
     grid-template-columns: 1fr;
   }
@@ -1406,8 +1658,17 @@ input:focus-visible {
     height: 68px;
   }
 
-  .site-header > a:last-child {
+  .header-action {
     font-size: 8px;
+  }
+
+  .site-header__actions {
+    gap: 5px;
+  }
+
+  .locale-switch {
+    min-width: 38px;
+    padding: 0 7px;
   }
 
   .hero h1 {
@@ -1505,6 +1766,39 @@ input:focus-visible {
 
   .finale-actions button {
     width: 100%;
+  }
+
+  .rules-backdrop {
+    align-items: start;
+    padding: 12px;
+  }
+
+  .rules-modal {
+    margin-top: 12px;
+    padding: 44px 22px 24px;
+    box-shadow: 8px 8px 0 var(--accent);
+  }
+
+  .rules-list {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-list article {
+    min-height: 0;
+  }
+
+  .scene-timer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .scene-timer > div:last-child {
+    width: 100%;
+  }
+
+  .scene-timer button {
+    min-height: 40px;
+    flex: 1;
   }
 }
 

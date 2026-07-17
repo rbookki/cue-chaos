@@ -2,19 +2,19 @@
 
 ## 0:00–0:20 — Hook
 
-Show the lobby and three story worlds.
+Show the Chinese lobby, switch briefly to English, and reveal all four story worlds.
 
 “Most AI storytelling keeps one person at a prompt box. CueChaos does the opposite: one phone turns a room of friends into a comedy cast—and nobody can burn through our API budget because the game makes zero runtime model calls.”
 
 ## 0:20–0:50 — Private casting
 
-Enter three names, start a game, and pass through two role reveals.
+Open the 60-second rules panel, enter three names, start a game, and pass through two role reveals.
 
 “GPT‑5.6 worked directly with us inside Codex as the story room. It created the playable roles, secret objectives, three-act escalation, choices, and endings that we reviewed and committed as typed story packs.”
 
 ## 0:50–1:35 — The game loop
 
-Show Act I, make a suggested choice, then use a custom move in Act II.
+Start the built-in performance timer in Act I, make a suggested choice, then use a custom move in Act II.
 
 “At runtime, a small local engine validates the cast, loads the selected story pack, and turns our latest move into a callback. The **Offline Story Pack** badge is literal: no API key, no external inference request, and no visitor-driven cost.”
 
@@ -24,9 +24,9 @@ Show the move reappearing in the next director line.
 
 ## 1:35–2:05 — Finale
 
-Complete Act III and scroll through the awards.
+Complete Act III and scroll through the three-act recap and awards.
 
-“The finale pays off the recurring joke and gives every player an affectionate award, so the session feels like a tiny movie made for this room.”
+“The finale preserves who made each decision, pays off the recurring joke, and gives every player an affectionate award, so the session feels like a tiny movie made for this room.”
 
 ## 2:05–2:40 — Codex + GPT‑5.6 evidence
 

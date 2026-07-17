@@ -25,8 +25,9 @@ test("server-renders the CueChaos product experience", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>CueChaos — The movie is listening<\/title>/i);
-  assert.match(html, /Your friends/);
-  assert.match(html, /START THE SHOW/);
+  assert.match(html, /你的朋友/);
+  assert.match(html, /开始演出/);
+  assert.match(html, /怎么玩/);
   assert.match(html, /GPT‑5\.6/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
@@ -42,6 +43,8 @@ test("offline story pack returns a complete, playable opening beat", async () =>
       players: ["Maya", "Leo", "Sam"],
       act: 0,
       history: [],
+      locale: "en",
+      sessionSeed: "test-opening",
     }),
   }), env, ctx);
   assert.equal(response.status, 200);
@@ -50,6 +53,30 @@ test("offline story pack returns a complete, playable opening beat", async () =>
   assert.equal(beat.roles.length, 3);
   assert.equal(beat.choices.length, 3);
   assert.ok(beat.roles.every((role) => role.secretObjective));
+});
+
+test("Chinese space pack reacts to a player move without external inference", async () => {
+  const worker = await loadWorker();
+  const response = await worker.fetch(new Request("http://localhost/api/director", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "twist",
+      theme: "space",
+      players: ["小雨", "阿杰", "Sam"],
+      act: 1,
+      playerMove: "把月球登记成情绪支持宠物",
+      history: ["把月球登记成情绪支持宠物"],
+      locale: "zh",
+      sessionSeed: "test-space",
+    }),
+  }), env, ctx);
+  assert.equal(response.status, 200);
+  const beat = await response.json();
+  assert.equal(beat.source, "story-pack");
+  assert.match(beat.directorLine, /把月球登记成情绪支持宠物/);
+  assert.equal(beat.choices.length, 3);
+  assert.ok(Number.isInteger(beat.variant));
 });
 
 test("runtime bundle contains no external OpenAI inference endpoint", async () => {

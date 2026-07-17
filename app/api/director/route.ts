@@ -1,5 +1,5 @@
 import { storyPackDirector } from "../../story-pack-director";
-import type { DirectorRequest, ThemeId } from "../../game-types";
+import type { DirectorRequest, Locale, ThemeId } from "../../game-types";
 
 export const runtime = "edge";
 
@@ -7,7 +7,7 @@ function cleanRequest(value: unknown): DirectorRequest | null {
   if (!value || typeof value !== "object") return null;
   const input = value as Record<string, unknown>;
   if (!(["start", "twist", "finale"] as const).includes(input.action as DirectorRequest["action"])) return null;
-  if (!(["heist", "office", "wedding"] as const).includes(input.theme as ThemeId)) return null;
+  if (!(["heist", "office", "wedding", "space"] as const).includes(input.theme as ThemeId)) return null;
   if (!Array.isArray(input.players) || input.players.length < 3 || input.players.length > 6) return null;
 
   const players = input.players
@@ -24,6 +24,10 @@ function cleanRequest(value: unknown): DirectorRequest | null {
     history: Array.isArray(input.history)
       ? input.history.filter((item): item is string => typeof item === "string").slice(-6).map((item) => item.slice(0, 120))
       : [],
+    locale: (["zh", "en"] as const).includes(input.locale as Locale) ? input.locale as Locale : "zh",
+    sessionSeed: typeof input.sessionSeed === "string" && input.sessionSeed
+      ? input.sessionSeed.slice(0, 64)
+      : "judge-demo",
   };
 }
 

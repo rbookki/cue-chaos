@@ -6,7 +6,7 @@ AI entertainment often becomes a solitary prompt box. We wanted something that m
 
 ## What it does
 
-CueChaos casts 3–6 players into an absurd three-act story. Every player privately receives a character and secret objective. The group performs the scene, picks a suggested move or improvises its own, and the local story engine folds that decision into the next scene. The finale turns the run into a movie ending and gives every player an award.
+CueChaos casts 3–6 players into a bilingual, timed three-act story. Every player privately receives a character and secret objective. The group performs for 60 seconds, picks a suggested move or improvises its own, and the seeded local story engine folds that decision into the next scene. The finale turns the run into a movie recap and gives every player an award.
 
 ## How we used GPT‑5.6 and Codex
 
@@ -16,7 +16,7 @@ Codex was also the primary environment for product ideation, interaction design,
 
 ## How it works
 
-The application is built with Next.js/React and runs on a Cloudflare-compatible worker. A local route validates player input and remixes the committed story pack with the group’s latest move. There are no OpenAI credentials, external inference calls, accounts, or usage charges in the deployed game.
+The application is built with Next.js/React and runs on a Cloudflare-compatible worker. A local route validates player input and remixes the committed story pack with the group’s latest move, a session seed, rotating roles, reordered choices, and four callback variants. There are no OpenAI credentials, external inference calls, accounts, or usage charges in the deployed game.
 
 ## Built with
 
@@ -31,8 +31,10 @@ The application is built with Next.js/React and runs on a Cloudflare-compatible 
 ## Highlights
 
 - Pass-the-phone secret role reveals for 3–6 players.
-- Three complete comedy worlds with escalating story beats.
-- Free-form moves become local callbacks in later scenes.
+- Four complete bilingual comedy worlds with escalating story beats.
+- Free-form moves become seeded local callbacks in later scenes.
+- Chinese/English switching, first-run rules, and a 60-second performance timer.
+- A shareable three-act recap plus personalized cast awards.
 - A complete credential-free judge path.
 - Zero runtime AI calls and zero visitor-driven API spend.
 

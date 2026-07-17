@@ -2,7 +2,7 @@
 
 **Your friends. One impossible scene. A movie that listens—without a runtime AI bill.**
 
-CueChaos is a 3–6 player, pass-the-phone improv party game. It casts every player, assigns private objectives, unfolds a three-act comedy, folds the group’s choices back into later scenes, and finishes with affectionate cast awards.
+CueChaos is a bilingual 3–6 player, pass-the-phone improv party game. It casts every player, assigns private objectives, runs a timed three-act comedy, folds the group’s choices back into later scenes, and finishes with a movie recap plus affectionate cast awards.
 
 Built with Codex and GPT‑5.6 for OpenAI Build Week 2026. Category: **Apps for Your Life**.
 
@@ -12,11 +12,11 @@ GPT‑5.6 is used directly inside the Codex build workflow as the project’s st
 
 The shipped website never calls the OpenAI API. Playing is deterministic, private, and free of model charges:
 
-1. Pick one of three absurd story worlds and enter 3–6 names.
+1. Choose Chinese or English, pick one of four absurd story worlds, and enter 3–6 names.
 2. Pass the phone so every player can privately reveal a role and secret objective.
-3. Perform each scene, choose a move, or improvise something worse.
-4. The local story engine turns the last move into a callback and advances the pack.
-5. Finish with a movie ending and one award for every player.
+3. Use the built-in 60-second timer to perform each scene together.
+4. Choose a move or improvise something worse; the seeded local engine turns it into one of several callbacks and remixes the next choices.
+5. Finish with a three-act movie recap and one personalized award for every player.
 
 The reusable story-room brief is documented in `submission/STORY_ROOM_PROMPT.md`. The primary Codex task and commit history provide evidence of the direct GPT‑5.6/Codex workflow.
 
@@ -52,6 +52,16 @@ lobby → private role reveal → three acts → finale
 - `submission/STORY_ROOM_PROMPT.md` — reproducible GPT‑5.6-in-Codex content workflow.
 - `tests/rendered-html.test.mjs` — server render, playable pack, safety, and validation tests.
 
+## Delivery-ready features
+
+- Complete Simplified Chinese and English product copy plus bilingual story content.
+- Four worlds: pastry heist, corporate disaster, wedding mystery, and lunar motel comedy.
+- A first-run rules dialog that explains the physical pass-the-phone format.
+- A resettable 60-second performance timer for each act.
+- Seeded role rotation, choice ordering, and four callback variants per decision.
+- A finale timeline that records who chose what before presenting cast awards.
+- Responsive touch targets, keyboard focus states, and reduced-motion support.
+
 ## How Codex and GPT‑5.6 contributed
 
 Codex was the primary development environment for product framing, interaction design, implementation, responsive styling, testing, and submission preparation. GPT‑5.6’s meaningful product role is the story-room pass: it generates the actual playable roles, objectives, scenes, and comic escalation committed in the repository rather than being a decorative chatbot.
@@ -61,6 +71,7 @@ Key decisions made with Codex:
 - Narrowed the experience from a generic story generator to a social, pass-the-phone game loop.
 - Replaced a publicly callable runtime model endpoint with committed story packs, eliminating visitor-driven API spend.
 - Preserved reactive fun locally by echoing player moves into later scenes and awards.
+- Expanded replayability with deterministic session seeds, rotating roles, reordered choices, and localized callback variants.
 - Made the entire judge path credential-free and visibly labeled **Offline Story Pack**.
 - Kept the content workflow reproducible with a checked-in story-room brief.
 
