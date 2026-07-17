@@ -1,17 +1,19 @@
-CueChaos is a pass-the-phone social deduction game with one rule: trust the team, but suspect every shortcut.
+Okay, this is CueChaos. It's a pass-the-phone deduction game where your friends are trying to solve the same case. Well... almost everyone is.
 
-This is not a pile of random prompts. Players choose one of four complete cases. In Reply All, the team has one mission: prove that a board forecast was falsified before five P.M. If they fail, the company risks its pension fund and two hundred forty jobs.
+For this demo, we're playing Reply All. Somebody falsified a board forecast, the vote is happening at five, and two hundred forty jobs are tied to the result. So yes, the office drama got out of hand pretty quickly.
 
-The phone is passed privately. Every player receives a cover role. One player becomes the Inside Saboteur, learns a motive, and sees three tempting plans that protect the cover. Everyone else joins the investigation team and watches for decisions that quietly damage the case.
+When the phone comes to you, you tap once to see your role. Most players join the investigation. One person gets the Inside Saboteur card, a motive, and three bad ideas that sound just reasonable enough to pitch to the group.
 
-Each case has three connected phases. Players discuss several plausible plans, then vote in secret. Here, the majority restores the whole server. The forecast returns, but the live access log is overwritten. The game records progress, risk, the anonymous vote split, and a new clue.
+Then the team gets its first problem. The numbers changed at two thirteen in the morning. We can audit the logs, question the finance team, or restore the whole server. Nobody gets an obviously stupid option. You have to argue for a plan, hand the phone around, and vote in private.
 
-That result does not disappear. The next phase starts from the exact consequence and keeps the evidence trail visible. By the finale, players are arguing from a coherent chain of decisions instead of improvising around disconnected scenes.
+Our group chooses the server restore. It sounds fast. It even brings the old forecast back. The catch is that it overwrites the access log, so we recover the file and lose the best way to identify who changed it.
 
-The team finally accuses Maya correctly, but two compromised steps have already damaged the case. Catching the Saboteur is only half the win condition: the team must also resist at least two marked high-risk plans.
+That mistake stays on the table. Round two begins with the missing log already baked into the case, and the new evidence sits right above the next decision. You can actually point to what happened and ask, "Who kept pushing us toward the shortcut?"
 
-GPT-five-point-six worked inside Codex as a controlled story room. The generation brief required a mission, a deadline, a credible motive, measurable consequences, and a clue chain whose phases could not be reordered. Codex then turned the reviewed output into typed case data, built the bilingual React experience, and added automated tests for the game rules and content constraints.
+At the end, we accuse Maya correctly... and still lose. We let two compromised plans through. Catching the Saboteur is only half the job; the team also has to protect the case.
 
-There is no model call during play. CueChaos ships the reviewed cases with the app, needs no API key, and creates no visitor-driven inference cost.
+I built the project in Codex with GPT-five-point-six. I used the model like a story room, not a live game master. Every case needed one goal, a deadline, a believable motive, measurable consequences, and clues that still mattered in the next round. If I could swap two scenes without breaking the story, the case went back for another pass.
 
-CueChaos: trust the team, suspect everyone, and follow the evidence.
+Once the cases held together, Codex turned them into typed data, built the bilingual React game, and added tests around the rules. The reviewed cases ship with the site. There is no model call while somebody is playing, no API key, and no way for a visitor to spend the creator's credits.
+
+That's CueChaos. The setting can be ridiculous. The evidence can't be.

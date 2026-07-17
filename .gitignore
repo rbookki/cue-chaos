@@ -43,7 +43,8 @@ next-env.d.ts
 /work/
 
 # generated demo media
-/submission/CueChaos-Demo.avi
+/submission/CueChaos-Demo*.avi
 /submission/cuechaos-video-only.*
+/submission/media/CueChaos-Demo*.avi.png
 /submission/media/*.aiff
 /submission/media/*.wav
