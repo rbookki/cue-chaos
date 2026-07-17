@@ -17,6 +17,7 @@ export interface SabotageTarget {
   round: number;
   choiceId: ChoiceId;
   label: string;
+  reason: string;
 }
 
 export interface SecretCard {
@@ -30,11 +31,15 @@ export interface SecretCard {
 export interface ChaosChoice {
   id: ChoiceId;
   label: string;
+  pitch: string;
   consequence: string;
-  chaos: number;
+  clue: string;
+  progress: number;
+  risk: number;
 }
 
 export interface ChaosRound {
+  phase: string;
   headline: string;
   situation: string;
   question: string;
@@ -42,6 +47,8 @@ export interface ChaosRound {
 }
 
 export interface SabotageGame {
+  goal: string;
+  stakes: string;
   cards: SecretCard[];
   rounds: [ChaosRound, ChaosRound, ChaosRound];
   source: "story-pack";
@@ -60,8 +67,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "MIDNIGHT CAPER", zh: "午夜大劫案" },
     title: { en: "The Last Croissant", zh: "最后一个牛角包" },
     logline: {
-      en: "Save the heist while one crew member secretly wrecks the plan.",
-      zh: "拯救这场劫案——但团队里有人正秘密毁掉计划。",
+      en: "Recover a stolen recipe before midnight—without exposing the crew.",
+      zh: "在午夜前夺回被偷的配方，同时不能暴露整个团队。",
     },
     accent: "#ffd84d",
     symbol: "◇",
@@ -70,8 +77,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "CORPORATE DISASTER", zh: "职场灾难片" },
     title: { en: "Reply All", zh: "回复所有人" },
     logline: {
-      en: "Three company crises. One coworker wants every meeting to fail.",
-      zh: "三场公司危机，一个同事希望每次会议都彻底失败。",
+      en: "Prove the board forecast was falsified before the 5 PM vote.",
+      zh: "在下午五点董事会表决前，证明财务预测遭到篡改。",
     },
     accent: "#63f3c3",
     symbol: "↗",
@@ -80,8 +87,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "ROMANTIC MYSTERY", zh: "浪漫悬疑片" },
     title: { en: "Object Forever", zh: "永远反对" },
     logline: {
-      en: "Keep the wedding alive while a hidden guest engineers disaster.",
-      zh: "让婚礼继续，同时找出正在制造灾难的神秘宾客。",
+      en: "Find the real rings before the vows and expose who switched them.",
+      zh: "在宣誓前找回真正的戒指，并揭穿掉包它们的人。",
     },
     accent: "#ff76b8",
     symbol: "♡",
@@ -90,8 +97,8 @@ export const THEMES: Record<ThemeId, {
     eyebrow: { en: "COSMIC CHECK-IN", zh: "宇宙入住指南" },
     title: { en: "Moon Motel", zh: "月球汽车旅馆" },
     logline: {
-      en: "Protect a lunar motel from the one guest trying to crash the moon.",
-      zh: "保护月球旅馆，找出那个想让整个月球坠毁的客人。",
+      en: "Restore the orbit stabilizer before the next shuttle arrives.",
+      zh: "在下一班穿梭机抵达前，修复旅馆的轨道稳定器。",
     },
     accent: "#9fa8ff",
     symbol: "✦",

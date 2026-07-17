@@ -2,44 +2,42 @@
 
 ## 0:00–0:20 — Hook
 
-Show the English lobby, briefly switch to Chinese, then return to English and reveal the four cases.
+Show the four cases, then open **Reply All**.
 
-“One of us is secretly trying to wreck the story. CueChaos turns one phone into a fast social deduction game—and nobody can burn our API budget because the public game makes zero model calls.”
+“This is not three random prompts. We have one mission: prove a board forecast was falsified before 5 PM. One of us secretly needs the evidence to disappear.”
 
 ## 0:20–0:50 — Secret deal
 
-Open **How to Play**, enter three names, deal roles, and show one Cast card followed by the Saboteur card and its three targets.
+Show one investigation-team card and the Inside Saboteur card with its motive and three target plans.
 
-“Pass the phone. Everyone gets a cover role, but one player also becomes the Plot Saboteur. Only they know the worst outcome in each of three crises.”
+“Pass the phone. Everyone gets a cover role, but the Saboteur learns why they are compromising this case and which tempting shortcuts protect their cover.”
 
-## 0:50–1:35 — Anonymous round
+## 0:50–1:35 — Consequential decision
 
-Show a crisis and its three public choices. Start the secret ballot, pass through all three private votes, then reveal the majority, anonymous vote split, and target status.
+Show the mission, stakes, first situation, and three plans with rational pitches. Complete the secret ballot and reveal its consequence, progress, risk, and clue.
 
-“The Saboteur must push the marked option without being obvious. After the result, the game reveals the evidence—not who cast each vote—and gives the table 30 seconds to argue.”
+“Every plan can be defended before the vote. Afterward, the group sees exactly what the action achieved, what it endangered, and what evidence it produced.”
 
-Show a second crisis briefly.
+Open phase two and point to **Case So Far**.
 
-“The comedy is authored, but the suspicion comes from the people in the room.”
+“The result does not vanish. It becomes part of the visible evidence trail, and the next phase starts from what we just discovered.”
 
-## 1:35–2:05 — Final accusation
+## 1:35–2:05 — Finale
 
-Complete the final private accusations and reveal the verdict, target count, chaos score, accusation results, and damage ledger.
+Complete the accusation and show the verdict, compromised steps, progress, risk, votes, and evidence trail.
 
-“The Cast needs both conditions: uniquely identify the Saboteur and stop at least two of their three targets. Otherwise, the Saboteur steals the final cut.”
+“The investigation team must do two things: catch the inside threat and block at least two marked high-risk plans. Social behavior matters, but the story now gives everyone real evidence to argue about.”
 
 ## 2:05–2:40 — Codex + GPT‑5.6 evidence
 
-Show `submission/STORY_ROOM_PROMPT.md`, `app/sabotage-director.ts`, the tests, and the main Codex task.
+Show `submission/STORY_ROOM_PROMPT.md`, one case in `app/sabotage-director.ts`, and the tests.
 
-“GPT‑5.6 worked directly with us inside Codex as a controlled writers’ room. It produced the bilingual roles, crises, choices, and consequences that players actually use. Codex handled the product pivot, UI engineering, testing, and a security decision that moved generation out of the public runtime.”
+“GPT‑5.6 worked inside Codex as a controlled case room. We required a mission, deadline, motive, consequences, and a clue chain—and rejected any case whose phases could be reordered without breaking the logic. The reviewed output ships as typed data.”
 
 Show the zero-API test.
 
-“No key, no external inference endpoint, no visitor-driven cost.”
+“No key, no external inference endpoint, and no visitor-driven cost.”
 
 ## 2:40–2:55 — Close
 
-Return to the verdict or lobby.
-
-“CueChaos: trust the cast, suspect everyone.”
+“CueChaos: trust the team, suspect everyone, follow the evidence.”

@@ -19,7 +19,9 @@ type RoundResult = {
   roundIndex: number;
   winningChoiceId: ChoiceId;
   counts: Record<ChoiceId, number>;
-  chaosDelta: number;
+  progressDelta: number;
+  riskDelta: number;
+  clue: string;
   sabotageHit: boolean;
 };
 
@@ -30,15 +32,15 @@ const TEXT = {
     siteTag: "ZERO-API SOCIAL DEDUCTION",
     howTo: "HOW TO PLAY?",
     exit: "EXIT GAME ×",
-    signal: "ONE OF YOU IS OFF SCRIPT",
-    heroLine1: "Trust the cast.",
+    signal: "ONE OF YOU IS COMPROMISING THE CASE",
+    heroLine1: "Trust the team.",
     heroLine2: "Suspect everyone.",
-    heroBody: "One player is secretly wrecking the story. Vote through three impossible crises, read the room, and expose the Plot Saboteur before the final cut.",
+    heroBody: "One player is secretly compromising the mission. Make three connected decisions, follow the evidence, and expose who keeps pushing dangerous shortcuts.",
     players: "players",
     minutes: "minutes",
     saboteur: "saboteur",
     casting: "CHOOSE A CASE",
-    chooseWorld: "Where will the sabotage happen?",
+    chooseWorld: "Which mission will your group solve?",
     take: "CASE 001",
     selected: "SELECTED",
     select: "SELECT",
@@ -48,39 +50,43 @@ const TEXT = {
     start: "DEAL SECRET ROLES",
     loading: "SHUFFLING THE EVIDENCE…",
     offlineNote: "Deduction packs made with GPT‑5.6 in Codex · Zero API calls while playing",
-    format: "THE NEW MODE",
+    format: "ONE CASE · THREE CAUSAL STEPS",
     steps: [
-      ["Hide", "One player secretly becomes the Plot Saboteur and receives three target outcomes."],
-      ["Vote", "Everyone privately votes on each crisis, then argues about who pushed the worst choice."],
-      ["Accuse", "After three rounds, cast a final secret accusation and reveal who wrecked the story."],
+      ["Investigate", "Every case has one goal. Each decision reveals a clue and becomes part of the next scene."],
+      ["Choose", "Vote privately between careful plans and tempting shortcuts. Consequences change progress and risk."],
+      ["Deduce", "Use the full evidence trail to identify who repeatedly pushed plans that compromised the mission."],
     ],
-    rulesTitle: "Find the one who is off script",
-    rulesIntro: "No acting required. The game is private voting, public bluffing, and one final accusation.",
+    rulesTitle: "Solve the case. Catch the inside threat.",
+    rulesIntro: "Every round advances one continuous mission. Comedy lives in the setting; the evidence and consequences follow a clear chain.",
     rules: [
-      ["Deal roles", "Pass the phone. One player sees Plot Saboteur; everyone else sees Cast."],
-      ["Protect targets", "The Saboteur gets one marked outcome per round and tries to make it win the vote."],
-      ["Vote privately", "Pass the phone again so every choice stays anonymous. Never show your screen."],
-      ["Win the finale", "Cast wins only by catching the Saboteur before two target outcomes succeed."],
+      ["Deal roles", "Pass the phone. One player sees Inside Saboteur; everyone else joins the investigation team."],
+      ["Follow the case", "Read the goal, stakes, and evidence trail. The previous result remains visible in every later round."],
+      ["Vote privately", "Every plan sounds plausible. Only after the vote do you see what it achieved, what it risked, and which clue it found."],
+      ["Win the finale", "Cast must identify the Saboteur and stop at least two marked high-risk plans. Otherwise, the Saboteur wins."],
     ],
     close: "GOT IT — PICK A CASE",
     secretDeal: "SECRET ROLE DEAL",
     passTo: "PASS THE PHONE TO",
     noPeeking: "Make sure nobody is looking. Your allegiance stays secret until the finale.",
     revealRole: "REVEAL MY ROLE",
-    castTeam: "YOU ARE CAST",
-    saboteurTeam: "YOU ARE THE PLOT SABOTEUR",
+    castTeam: "YOU ARE INVESTIGATION TEAM",
+    saboteurTeam: "YOU ARE THE INSIDE SABOTEUR",
     coverRole: "YOUR COVER ROLE",
     privateBriefing: "PRIVATE BRIEFING",
-    targets: "YOUR THREE TARGET OUTCOMES",
+    targets: "PLANS THAT PROTECT YOUR COVER",
     targetRound: "ROUND {n}",
     hidePass: "HIDE & PASS LEFT",
     enterCrisis: "START THE FIRST CRISIS",
     privateOnly: "For {name} only. Do not show anyone.",
     caseFile: "CASE FILE",
     round: "ROUND {n} / 3",
-    chaos: "CHAOS",
+    progress: "CASE PROGRESS",
+    risk: "CASE RISK",
+    caseGoal: "MISSION",
+    stakes: "WHY IT MATTERS",
+    caseSoFar: "CASE SO FAR",
     decision: "THE DECISION",
-    ballotHint: "Read the three options. Then pass the phone for anonymous voting.",
+    ballotHint: "Each plan can work, but some trade evidence for speed. Discuss the logic, then vote in secret.",
     beginVoting: "BEGIN SECRET BALLOT",
     votesLocked: "{n} / {total} VOTES LOCKED",
     readyFor: "PRIVATE BALLOT FOR",
@@ -90,27 +96,28 @@ const TEXT = {
     voteLocked: "VOTE LOCKED",
     passNext: "Hide the screen and pass left.",
     majority: "THE MAJORITY CHOSE",
-    targetHit: "SABOTEUR TARGET SUCCEEDED",
-    targetBlocked: "CAST BLOCKED THE TARGET",
-    consequence: "WHAT HAPPENED",
+    targetHit: "THE MISSION WAS COMPROMISED",
+    targetBlocked: "THE EVIDENCE TRAIL HELD",
+    consequence: "CONSEQUENCE",
+    clueFound: "NEW EVIDENCE",
     evidence: "ANONYMOUS VOTE SPLIT",
     discuss: "DISCUSSION WINDOW",
-    discussBody: "Who argued for this outcome? Who stayed too quiet? Defend yourself.",
-    nextRound: "OPEN THE NEXT CASE FILE",
+    discussBody: "Was this risk necessary? Who pushed the shortcut, and did their reasoning match the evidence?",
+    nextRound: "FOLLOW THE CONSEQUENCE",
     finalAccusation: "FINAL ACCUSATION",
-    accusationBody: "One at a time, secretly vote for the player you believe is the Plot Saboteur.",
+    accusationBody: "One at a time, secretly vote for the player you believe compromised the case.",
     accuseReady: "I’M READY TO ACCUSE",
     accuseQuestion: "WHO WAS OFF SCRIPT?",
     cannotSelf: "You cannot vote for yourself.",
     revealVerdict: "REVEAL THE SABOTEUR",
-    castWins: "THE CAST SAVED THE STORY",
-    saboteurWins: "THE SABOTEUR STOLE THE FINAL CUT",
-    saboteurWas: "THE PLOT SABOTEUR WAS",
+    castWins: "THE TEAM SECURED THE MISSION",
+    saboteurWins: "THE SABOTEUR COMPROMISED THE CASE",
+    saboteurWas: "THE INSIDE SABOTEUR WAS",
     caught: "IDENTITY EXPOSED",
     escaped: "IDENTITY HIDDEN",
-    hits: "TARGETS WON",
+    hits: "COMPROMISED STEPS",
     finalVotes: "FINAL ACCUSATION RESULTS",
-    roundLedger: "THREE ROUNDS OF DAMAGE",
+    roundLedger: "THE COMPLETE EVIDENCE TRAIL",
     replay: "PLAY ANOTHER CASE",
     copy: "COPY THE VERDICT",
     copied: "VERDICT COPIED!",
@@ -120,15 +127,15 @@ const TEXT = {
     siteTag: "零 API 社交推理游戏",
     howTo: "怎么玩？",
     exit: "退出游戏 ×",
-    signal: "你们之中有人没有按剧本来",
-    heroLine1: "相信演员。",
+    signal: "你们之中有人正在污染案件",
+    heroLine1: "相信团队。",
     heroLine2: "怀疑所有人。",
-    heroBody: "一名玩家正在秘密毁掉剧情。经历三轮荒唐危机、匿名投票和公开互相怀疑，在最终指认前找出剧情破坏者。",
+    heroBody: "一名玩家正在秘密破坏真实任务。完成三个连续决策、追踪证据链，找出那个总在推动危险捷径的人。",
     players: "玩家",
     minutes: "分钟",
     saboteur: "破坏者",
     casting: "选择案件",
-    chooseWorld: "破坏行动会发生在哪里？",
+    chooseWorld: "这一次你们要解决哪项任务？",
     take: "案件 001",
     selected: "已选择",
     select: "选择",
@@ -138,39 +145,43 @@ const TEXT = {
     start: "发放秘密身份",
     loading: "正在打乱证据…",
     offlineNote: "推理剧情包由 GPT‑5.6 在 Codex 中创作 · 游玩时零 API 调用",
-    format: "全新模式",
+    format: "一个案件 · 三步因果链",
     steps: [
-      ["隐藏", "一名玩家秘密成为剧情破坏者，并得到三轮目标结果。"],
-      ["投票", "每轮所有人匿名选择，结果揭晓后讨论是谁推动了最糟选项。"],
-      ["指认", "三轮结束后秘密投票，揭晓到底是谁一直在毁剧情。"],
+      ["调查", "每个案件只有一个明确目标；每次选择都会产生线索，并进入下一幕。"],
+      ["决策", "在稳妥方案和诱人捷径之间匿名投票，结果会改变进度与风险。"],
+      ["推理", "根据完整证据链，找出那个反复推动任务失控方案的人。"],
     ],
-    rulesTitle: "找出没有按剧本来的那个人",
-    rulesIntro: "不需要演戏。游戏只有秘密投票、公开撒谎和最后一次指认。",
+    rulesTitle: "解决案件，抓出内部破坏者",
+    rulesIntro: "每一轮都在推进同一个任务。幽默来自人物和环境，但证据与后果必须保持清晰因果。",
     rules: [
-      ["发放身份", "依次传手机。一人看到“剧情破坏者”，其他人都是普通演员。"],
-      ["推动目标", "破坏者每轮有一个标记结果，要暗中让它成为多数选择。"],
-      ["匿名投票", "再次传手机，每个人单独选择。绝对不要展示自己的屏幕。"],
-      ["决定胜负", "演员必须抓到破坏者，并阻止至少两个目标结果，才能获胜。"],
+      ["发放身份", "依次传手机。一人看到“内部破坏者”，其他人都是调查团队。"],
+      ["追踪案件", "阅读任务、利害和证据记录；上一轮结果会一直保留，并构成下一轮背景。"],
+      ["匿名投票", "每个方案都能自圆其说。投票后才会揭晓它推动了什么、制造了什么风险、找到了什么线索。"],
+      ["决定胜负", "团队必须认出破坏者，并阻止至少两个被标记的高风险方案，才能获胜。"],
     ],
     close: "明白了，选择案件",
     secretDeal: "秘密身份发放",
     passTo: "把手机交给",
     noPeeking: "确认没人偷看。你的阵营必须保密到最终揭晓。",
     revealRole: "揭晓我的身份",
-    castTeam: "你是普通演员",
-    saboteurTeam: "你是剧情破坏者",
+    castTeam: "你是调查团队",
+    saboteurTeam: "你是内部破坏者",
     coverRole: "伪装身份",
     privateBriefing: "秘密任务",
-    targets: "你的三个目标结果",
+    targets: "能够保护你身份的三个方案",
     targetRound: "第 {n} 轮",
     hidePass: "隐藏并传给左边",
     enterCrisis: "进入第一场危机",
     privateOnly: "本页仅供 {name} 查看，禁止展示给别人。",
     caseFile: "案件档案",
     round: "第 {n} / 3 轮",
-    chaos: "混乱值",
+    progress: "案件进度",
+    risk: "案件风险",
+    caseGoal: "任务目标",
+    stakes: "失败代价",
+    caseSoFar: "案件进展",
     decision: "本轮决策",
-    ballotHint: "先读完三个选项，然后依次传手机匿名投票。",
+    ballotHint: "每个方案都可能奏效，但有些会用证据换速度。先讨论逻辑，再传手机匿名投票。",
     beginVoting: "开始秘密投票",
     votesLocked: "已锁定 {n} / {total} 票",
     readyFor: "秘密选票属于",
@@ -180,27 +191,28 @@ const TEXT = {
     voteLocked: "选票已锁定",
     passNext: "隐藏屏幕，然后传给左边。",
     majority: "多数人选择了",
-    targetHit: "破坏者目标成功",
-    targetBlocked: "演员阻止了目标",
-    consequence: "事情变成了这样",
+    targetHit: "任务完整性遭到破坏",
+    targetBlocked: "证据链保持完整",
+    consequence: "行动后果",
+    clueFound: "新增证据",
     evidence: "匿名票数分布",
     discuss: "公开讨论时间",
-    discussBody: "是谁一直推动这个结果？谁安静得过分？现在互相辩解。",
-    nextRound: "打开下一份案件档案",
+    discussBody: "这次风险真的有必要吗？是谁推动了捷径，他的理由符合现有证据吗？",
+    nextRound: "继续追踪后果",
     finalAccusation: "最终指认",
-    accusationBody: "依次秘密投票，选出你认为是剧情破坏者的玩家。",
+    accusationBody: "依次秘密投票，选出你认为一直在污染案件的玩家。",
     accuseReady: "我准备好指认了",
     accuseQuestion: "谁没有按剧本来？",
     cannotSelf: "不能投给自己。",
-    revealVerdict: "揭晓剧情破坏者",
-    castWins: "演员成功拯救剧情",
-    saboteurWins: "破坏者夺走最终剪辑权",
-    saboteurWas: "真正的剧情破坏者是",
+    revealVerdict: "揭晓内部破坏者",
+    castWins: "团队成功保全任务",
+    saboteurWins: "破坏者成功污染案件",
+    saboteurWas: "真正的内部破坏者是",
     caught: "身份暴露",
     escaped: "成功隐藏",
-    hits: "目标成功数",
+    hits: "遭破坏步骤",
     finalVotes: "最终指认票数",
-    roundLedger: "三轮破坏记录",
+    roundLedger: "完整证据链",
     replay: "再玩一个案件",
     copy: "复制判决结果",
     copied: "判决已复制！",
@@ -346,7 +358,7 @@ function SecretReveal({ locale, card, index, total, revealed, onReveal, onNext }
             <span className={`team-badge team-badge--${card.team}`}>{isSaboteur ? text.saboteurTeam : text.castTeam}</span>
             <div className="cover-role"><span>{text.coverRole}</span><h1>{card.coverRole}</h1></div>
             <div className="secret-mission"><span>{text.privateBriefing}</span><p>{card.briefing}</p></div>
-            {isSaboteur && <div className="target-list"><span>{text.targets}</span>{card.targets.map((target) => <div key={target.round}><small>{text.targetRound.replace("{n}", String(target.round))}</small><strong>{target.choiceId} · {target.label}</strong></div>)}</div>}
+            {isSaboteur && <div className="target-list"><span>{text.targets}</span>{card.targets.map((target) => <div key={target.round}><small>{text.targetRound.replace("{n}", String(target.round))}</small><span><strong>{target.choiceId} · {target.label}</strong><em>{target.reason}</em></span></div>)}</div>}
             <button onClick={onNext}>{index === total - 1 ? text.enterCrisis : text.hidePass} <i>→</i></button>
           </div>
         )}
@@ -356,21 +368,26 @@ function SecretReveal({ locale, card, index, total, revealed, onReveal, onNext }
   );
 }
 
-function GameTopbar({ locale, roundIndex, chaos }: { locale: Locale; roundIndex: number; chaos: number }) {
+function GameTopbar({ locale, roundIndex, progress, risk }: { locale: Locale; roundIndex: number; progress: number; risk: number }) {
   const text = TEXT[locale];
   return (
-    <header className="game-topbar"><span>{text.caseFile}</span><div className="round-pips">{[0, 1, 2].map((step) => <i key={step} className={step <= roundIndex ? "is-active" : ""} />)}</div><div className="chaos-score"><span>{text.chaos}</span><strong>{chaos}%</strong></div></header>
+    <header className="game-topbar"><span>{text.caseFile}</span><div className="round-pips">{[0, 1, 2].map((step) => <i key={step} className={step <= roundIndex ? "is-active" : ""} />)}</div><div className="case-scores"><span>{text.progress} <strong>{progress} / 9</strong></span><span>{text.risk} <strong>{risk} / 6</strong></span></div></header>
   );
 }
 
-function RoundBrief({ locale, round, roundIndex, theme, chaos, onStart }: { locale: Locale; round: ChaosRound; roundIndex: number; theme: ThemeId; chaos: number; onStart: () => void }) {
+function RoundBrief({ locale, round, roundIndex, theme, game, results, progress, risk, onStart }: { locale: Locale; round: ChaosRound; roundIndex: number; theme: ThemeId; game: SabotageGame; results: RoundResult[]; progress: number; risk: number; onStart: () => void }) {
   const text = TEXT[locale];
   return (
     <main className="game-screen">
-      <GameTopbar locale={locale} roundIndex={roundIndex} chaos={chaos} />
+      <GameTopbar locale={locale} roundIndex={roundIndex} progress={progress} risk={risk} />
       <section className="crisis-layout">
-        <div className="crisis-copy"><span className="scene-kicker">{text.round.replace("{n}", String(roundIndex + 1))} · {THEMES[theme].eyebrow[locale]}</span><h1>{round.headline}</h1><p>“{round.situation}”</p><div className="crisis-question"><span>{text.decision}</span><strong>{round.question}</strong></div></div>
-        <aside className="public-options"><p>{text.ballotHint}</p>{round.choices.map((item) => <div key={item.id}><span>{item.id}</span><strong>{item.label}</strong></div>)}<button onClick={onStart}>{text.beginVoting} <span>→</span></button></aside>
+        <div className="crisis-copy">
+          <div className="case-objective"><div><span>{text.caseGoal}</span><p>{game.goal}</p></div><div><span>{text.stakes}</span><p>{game.stakes}</p></div></div>
+          <span className="scene-kicker">{text.round.replace("{n}", String(roundIndex + 1))} · {round.phase} · {THEMES[theme].eyebrow[locale]}</span><h1>{round.headline}</h1><p>{round.situation}</p>
+          {results.length > 0 && <div className="case-history"><span>{text.caseSoFar}</span>{results.map((result) => { const resolvedRound = game.rounds[result.roundIndex]; const selected = resolvedRound.choices.find((item) => item.id === result.winningChoiceId)!; return <article key={result.roundIndex}><b>0{result.roundIndex + 1}</b><div><strong>{selected.label}</strong><p>{selected.consequence}</p><small>{text.clueFound}: {selected.clue}</small></div></article>; })}</div>}
+          <div className="crisis-question"><span>{text.decision}</span><strong>{round.question}</strong></div>
+        </div>
+        <aside className="public-options"><p>{text.ballotHint}</p>{round.choices.map((item) => <div key={item.id}><span>{item.id}</span><div><strong>{item.label}</strong><small>{item.pitch}</small></div></div>)}<button onClick={onStart}>{text.beginVoting} <span>→</span></button></aside>
       </section>
     </main>
   );
@@ -384,13 +401,13 @@ function PrivateBallot({ locale, player, index, total, round, ready, onReady, on
       {!ready ? (
         <section className="pass-card"><span className="kicker">{text.readyFor}</span><h1>{player}</h1><p>{text.readyBody}</p><button onClick={onReady}>{text.ready} <span>→</span></button></section>
       ) : (
-        <section className="private-vote-card"><span className="kicker">{text.choose}</span><h1>{round.question}</h1><div className="private-choice-list">{round.choices.map((item) => <button key={item.id} onClick={() => onVote(item.id)}><span>{item.id}</span><strong>{item.label}</strong><i>→</i></button>)}</div><p>{text.voteLocked} · {text.passNext}</p></section>
+        <section className="private-vote-card"><span className="kicker">{text.choose}</span><h1>{round.question}</h1><div className="private-choice-list">{round.choices.map((item) => <button key={item.id} onClick={() => onVote(item.id)}><span>{item.id}</span><div><strong>{item.label}</strong><small>{item.pitch}</small></div><i>→</i></button>)}</div><p>{text.voteLocked} · {text.passNext}</p></section>
       )}
     </main>
   );
 }
 
-function RoundReveal({ locale, round, result, chaos, isFinal, onNext }: { locale: Locale; round: ChaosRound; result: RoundResult; chaos: number; isFinal: boolean; onNext: () => void }) {
+function RoundReveal({ locale, round, result, progress, risk, isFinal, onNext }: { locale: Locale; round: ChaosRound; result: RoundResult; progress: number; risk: number; isFinal: boolean; onNext: () => void }) {
   const text = TEXT[locale];
   const [seconds, setSeconds] = useState(30);
   useEffect(() => {
@@ -405,10 +422,11 @@ function RoundReveal({ locale, round, result, chaos, isFinal, onNext }: { locale
       <section className="result-card">
         <div className={`result-signal ${result.sabotageHit ? "is-hit" : "is-blocked"}`}>{result.sabotageHit ? text.targetHit : text.targetBlocked}</div>
         <span className="kicker">{text.majority}</span><h1><i>{winner.id}</i>{winner.label}</h1>
-        <div className="consequence-box"><span>{text.consequence}</span><p>{winner.consequence}</p><strong>+{result.chaosDelta} {text.chaos}</strong></div>
+        <div className="consequence-box"><span>{text.consequence}</span><p>{winner.consequence}</p><div className="impact-chips"><strong>+{result.progressDelta} {text.progress}</strong><strong className={result.riskDelta > 0 ? "has-risk" : ""}>+{result.riskDelta} {text.risk}</strong></div></div>
+        <div className="clue-box"><span>{text.clueFound}</span><p>{result.clue}</p></div>
         <div className="vote-evidence"><span>{text.evidence}</span>{round.choices.map((item) => <div key={item.id}><small>{item.id}</small><div><i style={{ width: `${(result.counts[item.id] / maxVotes) * 100}%` }} /></div><strong>{result.counts[item.id]}</strong></div>)}</div>
       </section>
-      <aside className="discussion-card"><span>{text.discuss}</span><strong>00:{String(seconds).padStart(2, "0")}</strong><p>{text.discussBody}</p><div className="chaos-big"><span>{text.chaos}</span><b>{chaos}%</b></div><button onClick={onNext}>{isFinal ? text.finalAccusation : text.nextRound} <span>→</span></button></aside>
+      <aside className="discussion-card"><span>{text.discuss}</span><strong>00:{String(seconds).padStart(2, "0")}</strong><p>{text.discussBody}</p><div className="case-totals"><div><span>{text.progress}</span><b>{progress} / 9</b></div><div><span>{text.risk}</span><b>{risk} / 6</b></div></div><button onClick={onNext}>{isFinal ? text.finalAccusation : text.nextRound} <span>→</span></button></aside>
     </main>
   );
 }
@@ -427,7 +445,7 @@ function Accusation({ locale, player, players, index, total, ready, onReady, onA
   );
 }
 
-function Finale({ locale, theme, game, results, accusations, chaos, onReplay }: { locale: Locale; theme: ThemeId; game: SabotageGame; results: RoundResult[]; accusations: string[]; chaos: number; onReplay: () => void }) {
+function Finale({ locale, theme, game, results, accusations, progress, risk, onReplay }: { locale: Locale; theme: ThemeId; game: SabotageGame; results: RoundResult[]; accusations: string[]; progress: number; risk: number; onReplay: () => void }) {
   const text = TEXT[locale];
   const [copied, setCopied] = useState(false);
   const saboteur = game.cards.find((card) => card.team === "saboteur")!;
@@ -439,7 +457,7 @@ function Finale({ locale, theme, game, results, accusations, chaos, onReplay }: 
   const saboteurWins = !caught || sabotageHits >= 2;
 
   async function copyVerdict() {
-    const verdict = `${THEMES[theme].title[locale]} — ${saboteurWins ? text.saboteurWins : text.castWins}\n${text.saboteurWas}: ${saboteur.player}\n${text.hits}: ${sabotageHits}/3 · ${text.chaos}: ${chaos}%`;
+    const verdict = `${THEMES[theme].title[locale]} — ${saboteurWins ? text.saboteurWins : text.castWins}\n${text.saboteurWas}: ${saboteur.player}\n${text.hits}: ${sabotageHits}/3 · ${text.progress}: ${progress}/9 · ${text.risk}: ${risk}/6`;
     await navigator.clipboard.writeText(verdict);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
@@ -448,8 +466,8 @@ function Finale({ locale, theme, game, results, accusations, chaos, onReplay }: 
   return (
     <main className={`verdict-screen ${saboteurWins ? "is-saboteur-win" : "is-cast-win"}`}>
       <section className="verdict-hero"><span className="kicker">{THEMES[theme].eyebrow[locale]}</span><p>{saboteurWins ? text.saboteurWins : text.castWins}</p><h1>{saboteur.player}</h1><strong>{text.saboteurWas}</strong></section>
-      <div className="verdict-stats"><article><span>{caught ? text.caught : text.escaped}</span><strong>{caught ? "◎" : "◇"}</strong></article><article><span>{text.hits}</span><strong>{sabotageHits} / 3</strong></article><article><span>{text.chaos}</span><strong>{chaos}%</strong></article></div>
-      <section className="verdict-details"><div><span className="kicker">{text.finalVotes}</span><div className="accusation-results">{Object.entries(accusationCounts).sort((a, b) => b[1] - a[1]).map(([name, count]) => <article key={name}><strong>{name}</strong><span>{count} {locale === "zh" ? "票" : count === 1 ? "vote" : "votes"}</span></article>)}</div></div><div><span className="kicker">{text.roundLedger}</span><div className="damage-ledger">{results.map((result) => { const item = game.rounds[result.roundIndex].choices.find((choiceItem) => choiceItem.id === result.winningChoiceId)!; return <article key={result.roundIndex}><span>0{result.roundIndex + 1}</span><div><strong>{item.label}</strong><small>{result.sabotageHit ? text.targetHit : text.targetBlocked}</small></div></article>; })}</div></div></section>
+      <div className="verdict-stats"><article><span>{caught ? text.caught : text.escaped}</span><strong>{caught ? "◎" : "◇"}</strong></article><article><span>{text.hits}</span><strong>{sabotageHits} / 3</strong></article><article><span>{text.progress}</span><strong>{progress} / 9</strong></article><article><span>{text.risk}</span><strong>{risk} / 6</strong></article></div>
+      <section className="verdict-details"><div><span className="kicker">{text.finalVotes}</span><div className="accusation-results">{Object.entries(accusationCounts).sort((a, b) => b[1] - a[1]).map(([name, count]) => <article key={name}><strong>{name}</strong><span>{count} {locale === "zh" ? "票" : count === 1 ? "vote" : "votes"}</span></article>)}</div></div><div><span className="kicker">{text.roundLedger}</span><div className="damage-ledger">{results.map((result) => { const item = game.rounds[result.roundIndex].choices.find((choiceItem) => choiceItem.id === result.winningChoiceId)!; return <article key={result.roundIndex}><span>0{result.roundIndex + 1}</span><div><strong>{item.label}</strong><small>{item.clue}</small><em>+{item.progress} {text.progress} · +{item.risk} {text.risk}</em></div></article>; })}</div></div></section>
       <div className="finale-actions"><button className="button-outline" onClick={copyVerdict}>{copied ? text.copied : text.copy}</button><button className="button-solid" onClick={onReplay}>{text.replay} <span>→</span></button></div>
     </main>
   );
@@ -476,7 +494,8 @@ export function CueChaosGame() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const style = useMemo(() => ({ "--accent": THEMES[theme].accent }) as CSSProperties, [theme]);
-  const chaos = Math.min(100, 10 + results.reduce((sum, result) => sum + result.chaosDelta, 0));
+  const progress = results.reduce((sum, result) => sum + result.progressDelta, 0);
+  const risk = results.reduce((sum, result) => sum + result.riskDelta, 0);
 
   useEffect(() => { document.documentElement.lang = locale === "zh" ? "zh-CN" : "en"; }, [locale]);
 
@@ -534,7 +553,7 @@ export function CueChaosGame() {
     const round = game.rounds[roundIndex];
     const winner = round.choices.find((item) => item.id === winningChoiceId)!;
     const target = game.cards.find((card) => card.team === "saboteur")!.targets[roundIndex];
-    const result: RoundResult = { roundIndex, winningChoiceId, counts, chaosDelta: winner.chaos, sabotageHit: target.choiceId === winningChoiceId };
+    const result: RoundResult = { roundIndex, winningChoiceId, counts, progressDelta: winner.progress, riskDelta: winner.risk, clue: winner.clue, sabotageHit: target.choiceId === winningChoiceId };
     setResults((items) => [...items, result]);
     setScreen("reveal");
   }
@@ -573,11 +592,11 @@ export function CueChaosGame() {
       <header className="site-header"><Wordmark /><span className="site-header__tag">{TEXT[locale].siteTag}</span><div className="site-header__actions">{screen === "lobby" && <button className="locale-switch" onClick={() => setLocale((value) => value === "zh" ? "en" : "zh")}>{locale === "zh" ? "EN" : "中文"}</button>}<button className="header-action" onClick={screen === "lobby" ? () => setRulesOpen(true) : replay}>{screen === "lobby" ? TEXT[locale].howTo : TEXT[locale].exit}</button></div></header>
       {screen === "lobby" && <Lobby locale={locale} theme={theme} setTheme={setTheme} players={players} setPlayers={setPlayers} onStart={startGame} loading={loading} error={error} />}
       {screen === "secrets" && game && <SecretReveal locale={locale} card={game.cards[secretIndex]} index={secretIndex} total={game.cards.length} revealed={secretRevealed} onReveal={() => setSecretRevealed(true)} onNext={nextSecret} />}
-      {screen === "briefing" && game && <RoundBrief locale={locale} round={game.rounds[roundIndex]} roundIndex={roundIndex} theme={theme} chaos={chaos} onStart={beginBallot} />}
+      {screen === "briefing" && game && <RoundBrief locale={locale} round={game.rounds[roundIndex]} roundIndex={roundIndex} theme={theme} game={game} results={results} progress={progress} risk={risk} onStart={beginBallot} />}
       {screen === "ballot" && game && <PrivateBallot locale={locale} player={players[ballotIndex]} index={ballotIndex} total={players.length} round={game.rounds[roundIndex]} ready={ballotReady} onReady={() => setBallotReady(true)} onVote={castBallot} />}
-      {screen === "reveal" && game && <RoundReveal key={roundIndex} locale={locale} round={game.rounds[roundIndex]} result={results.at(-1)!} chaos={chaos} isFinal={roundIndex === 2} onNext={nextAfterReveal} />}
+      {screen === "reveal" && game && <RoundReveal key={roundIndex} locale={locale} round={game.rounds[roundIndex]} result={results.at(-1)!} progress={progress} risk={risk} isFinal={roundIndex === 2} onNext={nextAfterReveal} />}
       {screen === "accusation" && <Accusation locale={locale} player={players[accusationIndex]} players={players} index={accusationIndex} total={players.length} ready={accusationReady} onReady={() => setAccusationReady(true)} onAccuse={castAccusation} />}
-      {screen === "finale" && game && <Finale locale={locale} theme={theme} game={game} results={results} accusations={accusations} chaos={chaos} onReplay={replay} />}
+      {screen === "finale" && game && <Finale locale={locale} theme={theme} game={game} results={results} accusations={accusations} progress={progress} risk={risk} onReplay={replay} />}
       {rulesOpen && <RulesModal locale={locale} onClose={() => setRulesOpen(false)} />}
     </div>
   );

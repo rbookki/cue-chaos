@@ -1,8 +1,8 @@
 {
   "name": "cue-chaos",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "A bilingual zero-API social deduction game with anonymous voting and Codex-crafted chaos packs.",
+  "description": "A bilingual zero-API social deduction game with connected cases, evidence trails, and consequential decisions.",
   "license": "MIT",
   "engines": {
     "node": ">=22.13.0"

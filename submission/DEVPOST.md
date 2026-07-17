@@ -2,44 +2,43 @@
 
 ## Inspiration
 
-AI entertainment often becomes a solitary prompt box. We wanted a game that makes friends study one another instead—and that strangers cannot use to drain the creator’s API budget. CueChaos turns one phone and a set of committed comedy packs into a social deduction match with a real winner.
+AI party games often become either a solitary prompt box or a stream of unrelated “random” jokes. We wanted a social game where people debate plans, remember consequences, and catch a human bluff—without giving strangers a way to drain the creator’s API budget.
 
 ## What it does
 
-CueChaos gives 3–6 players public cover roles, then secretly makes one of them the Plot Saboteur. The group faces three absurd story crises and votes anonymously on what happens next. The Saboteur knows one target outcome per round and tries to steer the majority toward at least two targets without being caught. After every reveal, the table gets 30 seconds to debate the evidence. A final secret accusation decides whether the Cast saved the story or the Saboteur stole the final cut.
+CueChaos gives 3–6 players one connected mission with a deadline and real stakes. One player secretly becomes the Inside Saboteur. Across three causal phases, the group debates three plausible plans and votes anonymously. The selected plan changes case progress and risk, reveals a concrete clue, and becomes visible history in the next phase.
 
-The game is bilingual, defaults to English, takes 8–12 minutes, and requires no acting.
+The Saboteur knows one tempting high-risk plan per phase and tries to make at least two win while protecting a case-specific motive. After three phases, everyone privately accuses a suspect. The investigation team wins only by identifying the Saboteur and preserving the mission.
 
 ## How we used GPT‑5.6 and Codex
 
-GPT‑5.6 worked directly inside Codex as CueChaos’s controlled writers’ room. It created and refined the four playable worlds, bilingual cover roles, three-round crises, decisions, consequences, and calibrated chaos values. The reviewed result is committed as typed packs, and `submission/STORY_ROOM_PROMPT.md` makes that workflow reproducible.
+GPT‑5.6 worked directly inside Codex as a controlled case writers’ room. It created and refined the four bilingual missions, roles, motives, decisions, consequences, clues, and cause-and-effect chains. We used Codex to audit every case with a simple standard: if the phases could be reordered without breaking the story, the story was not ready.
 
-Codex was the primary environment for product ideation, interaction design, implementation, responsive styling, tests, the security model, and submission preparation. A central Codex decision was replacing a publicly callable model endpoint with build-time authored packs. Judges receive a complete experience, while visitors have no path to consume our API budget.
+Codex was also the primary environment for gameplay design, implementation, responsive styling, tests, the zero-API security model, and submission preparation. The reviewed case packs are committed to the repository, so visitors cannot trigger billable inference.
 
 ## How it works
 
-The app is built with Next.js and React for a Cloudflare-compatible worker. A local route validates 3–6 unique player names, selects exactly one Saboteur from a session seed, rotates cover roles and options, and marks each round’s highest-chaos consequence as the private target. All ballots, accusations, scoring, and verdict logic run locally in the browser.
+The app runs with Next.js and React on a Cloudflare-compatible worker. A local route validates 3–6 unique names, deterministically deals one Saboteur, rotates roles and plan order, and serves the committed case. Ballots, case state, accusation scoring, and the verdict all run locally.
 
 There are no OpenAI credentials, runtime inference calls, accounts, or usage charges in the deployed game.
+
+## Highlights
+
+- Four complete English/Chinese cases with goals, deadlines, stakes, and case-specific motives.
+- Three connected phases where consequences and evidence remain visible.
+- Plausible plans with hidden risk rather than obviously silly “bad” choices.
+- Anonymous ballots, discussion windows, final accusations, and a clear winner.
+- Credential-free judge path and zero visitor-driven API spend.
 
 ## Built with
 
 - Codex
-- GPT‑5.6 used directly in the Codex writers’ room
+- GPT‑5.6 used directly in the Codex case-room workflow
 - TypeScript
 - React / Next.js
 - Vinext / Vite
 - Cloudflare-compatible Workers runtime
 - Node test runner and ESLint
-
-## Highlights
-
-- One hidden Plot Saboteur and three private target outcomes.
-- Anonymous pass-the-phone ballots and final accusations for 3–6 players.
-- Four complete bilingual comedy cases with deterministic replayability.
-- Clear two-part win condition, 30-second discussions, vote evidence, and a final damage ledger.
-- English default with one-tap Simplified Chinese switching.
-- Credential-free judge path with zero runtime AI calls and zero visitor-driven API spend.
 
 ## Category
 
@@ -47,9 +46,9 @@ Apps for Your Life
 
 ## Submission checklist
 
-- [ ] Public YouTube demo, 3 minutes or shorter, with voiceover
-- [ ] Explain the direct GPT‑5.6-in-Codex writers’ room workflow
+- [ ] Public YouTube demo, 3 minutes or shorter
+- [ ] Show one complete consequence → clue → next-phase transition
+- [ ] Explain the GPT‑5.6-in-Codex causal case workflow
 - [ ] Show `STORY_ROOM_PROMPT.md` and `app/sabotage-director.ts`
-- [ ] Show the **Zero-API Social Deduction** label during gameplay
 - [ ] Include the primary `/feedback` Codex Session ID
 - [ ] Share the repository with the required judging accounts if private

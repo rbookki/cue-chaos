@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.0 — Causal Case Edition
+
+- Rebuilt every case around one mission, deadline, stakes, and case-specific Saboteur motive.
+- Replaced unrelated crises with three dependent phases: trace, secure, and resolve.
+- Added rational pre-vote pitches, causal consequences, concrete clues, case progress, and case risk.
+- Added a persistent **Case So Far** trail so prior decisions visibly shape later rounds.
+- Replaced arbitrary chaos targets with plausible shortcuts that protect the Saboteur by damaging evidence or mission integrity.
+- Renamed the social roles to **Investigation Team** and **Inside Saboteur**.
+- Expanded schema tests to enforce one careful plan, one tradeoff, and one unique high-risk target per phase.
+- Preserved fully credential-free, zero-runtime-API gameplay.
+
 ## 2.0.0 — Plot Saboteur Edition
 
 - Replaced the improv-performance loop with an 8–12 minute social deduction game.
