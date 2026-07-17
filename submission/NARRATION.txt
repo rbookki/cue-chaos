@@ -1,0 +1,17 @@
+CueChaos is a pass-the-phone social deduction game with one rule: trust the team, but suspect every shortcut.
+
+This is not a pile of random prompts. Players choose one of four complete cases. In Reply All, the team has one mission: prove that a board forecast was falsified before five P.M. If they fail, the company risks its pension fund and two hundred forty jobs.
+
+The phone is passed privately. Every player receives a cover role. One player becomes the Inside Saboteur, learns a motive, and sees three tempting plans that protect the cover. Everyone else joins the investigation team and watches for decisions that quietly damage the case.
+
+Each case has three connected phases. Players discuss several plausible plans, then vote in secret. Here, the majority restores the whole server. The forecast returns, but the live access log is overwritten. The game records progress, risk, the anonymous vote split, and a new clue.
+
+That result does not disappear. The next phase starts from the exact consequence and keeps the evidence trail visible. By the finale, players are arguing from a coherent chain of decisions instead of improvising around disconnected scenes.
+
+The team finally accuses Maya correctly, but two compromised steps have already damaged the case. Catching the Saboteur is only half the win condition: the team must also resist at least two marked high-risk plans.
+
+GPT-five-point-six worked inside Codex as a controlled story room. The generation brief required a mission, a deadline, a credible motive, measurable consequences, and a clue chain whose phases could not be reordered. Codex then turned the reviewed output into typed case data, built the bilingual React experience, and added automated tests for the game rules and content constraints.
+
+There is no model call during play. CueChaos ships the reviewed cases with the app, needs no API key, and creates no visitor-driven inference cost.
+
+CueChaos: trust the team, suspect everyone, and follow the evidence.
