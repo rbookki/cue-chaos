@@ -10,6 +10,8 @@ Built with Codex and GPT‑5.6 for OpenAI Build Week 2026. Category: **Apps for 
 
 Play the public, credential-free version at [cue-chaos-party-56.rbookki.chatgpt.site](https://cue-chaos-party-56.rbookki.chatgpt.site/). The game requires no account, API key, or external model call.
 
+Watch the [2:12 demo video on YouTube](https://youtu.be/wyZp7NEEIWE).
+
 ## How a case works
 
 1. Choose English or Chinese, select one of four cases, and enter 3–6 unique names.

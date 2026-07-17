@@ -1,5 +1,11 @@
 # CueChaos — Devpost Submission Draft
 
+## Submission links
+
+- Live demo: https://cue-chaos-party-56.rbookki.chatgpt.site/
+- Demo video: https://youtu.be/wyZp7NEEIWE
+- Source code: https://github.com/rbookki/cue-chaos
+
 ## Inspiration
 
 AI party games often become either a solitary prompt box or a stream of unrelated “random” jokes. We wanted a social game where people debate plans, remember consequences, and catch a human bluff—without giving strangers a way to drain the creator’s API budget.
@@ -46,9 +52,9 @@ Apps for Your Life
 
 ## Submission checklist
 
-- [ ] Public YouTube demo, 3 minutes or shorter
-- [ ] Show one complete consequence → clue → next-phase transition
-- [ ] Explain the GPT‑5.6-in-Codex causal case workflow
+- [x] Public YouTube demo, 3 minutes or shorter
+- [x] Show one complete consequence → clue → next-phase transition
+- [x] Explain the GPT‑5.6-in-Codex causal case workflow
 - [ ] Show `STORY_ROOM_PROMPT.md` and `app/sabotage-director.ts`
 - [ ] Include the primary `/feedback` Codex Session ID
-- [ ] Share the repository with the required judging accounts if private
+- [x] Public MIT-licensed source repository
