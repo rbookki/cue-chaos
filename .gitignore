@@ -47,4 +47,5 @@ next-env.d.ts
 /submission/cuechaos-video-only.*
 /submission/media/CueChaos-Demo*.avi.png
 /submission/media/*.aiff
+/submission/media/*.mp3
 /submission/media/*.wav
