@@ -6,6 +6,10 @@ CueChaos is a bilingual, pass-the-phone social deduction game for 3–6 friends.
 
 Built with Codex and GPT‑5.6 for OpenAI Build Week 2026. Category: **Apps for Your Life**.
 
+## Live build
+
+Play the public, credential-free version at [cue-chaos-party-56.rbookki.chatgpt.site](https://cue-chaos-party-56.rbookki.chatgpt.site/). The game requires no account, API key, or external model call.
+
 ## How a case works
 
 1. Choose English or Chinese, select one of four cases, and enter 3–6 unique names.
